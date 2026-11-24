@@ -1,0 +1,4326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cake Craft</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-hover: #0d5e58;
+      --primary-soft: rgba(15, 118, 110, 0.14);
+      --primary-border: rgba(15, 118, 110, 0.34);
+      --primary-text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #d8e3ed;
+      background-image:
+        radial-gradient(at 10% 12%, rgba(15, 118, 110, 0.22) 0px, transparent 52%),
+        radial-gradient(at 90% 15%, rgba(56, 189, 248, 0.22) 0px, transparent 50%),
+        radial-gradient(at 45% 92%, rgba(245, 158, 11, 0.16) 0px, transparent 56%);
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    body.lang-bn {
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .font-num {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .theme-bg {
+      background-color: var(--primary) !important;
+      color: var(--primary-text) !important;
+    }
+
+    .theme-bg-hover:hover {
+      background-color: var(--primary-hover) !important;
+    }
+
+    .theme-text {
+      color: var(--primary) !important;
+    }
+
+    .theme-border {
+      border-color: var(--primary) !important;
+    }
+
+    .theme-soft {
+      background-color: var(--primary-soft) !important;
+      color: var(--primary) !important;
+    }
+
+    .theme-soft-border {
+      border-color: var(--primary-border) !important;
+    }
+
+    /* Glassmorphism 2.0 Surfaces */
+    .glass-bar {
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(24px) saturate(185%);
+      -webkit-backdrop-filter: blur(24px) saturate(185%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 6px 26px -6px rgba(15, 23, 42, 0.08);
+    }
+
+    .glass-frame {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.78) 0%,
+        rgba(241, 245, 249, 0.74) 100%
+      );
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow:
+        0 10px 28px -8px rgba(15, 23, 42, 0.08),
+        0 2px 6px -1px rgba(15, 23, 42, 0.04),
+        inset 0 1px 0.5px rgba(255, 255, 255, 0.92);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px) saturate(175%);
+      -webkit-backdrop-filter: blur(16px) saturate(175%);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow:
+        0 4px 14px -4px rgba(15, 23, 42, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    }
+
+    .glass-input {
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+      transition: all 0.18s ease;
+    }
+
+    .glass-input:focus {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft), inset 0 1px 2px rgba(15, 23, 42, 0.02);
+      outline: none;
+    }
+
+    .glass-modal {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow:
+        0 28px 65px -15px rgba(15, 23, 42, 0.25),
+        inset 0 1px 0.5px rgba(255, 255, 255, 0.96);
+    }
+
+    /* Fixed Split Floating Dark Glass Pill Navigation */
+    .nav-dock-outer {
+      background: rgba(16, 17, 22, 0.86);
+      backdrop-filter: blur(26px) saturate(190%);
+      -webkit-backdrop-filter: blur(26px) saturate(190%);
+      box-shadow:
+        0 20px 44px -10px rgba(0, 0, 0, 0.48),
+        0 0 0 1px rgba(255, 255, 255, 0.14),
+        inset 0 1px 0.5px rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-capsule-inner {
+      background: linear-gradient(180deg, rgba(46, 48, 58, 0.84) 0%, rgba(26, 27, 33, 0.92) 100%);
+      box-shadow:
+        inset 0 1px 0.5px rgba(255, 255, 255, 0.14),
+        0 4px 14px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-circle-btn {
+      background: rgba(56, 58, 70, 0.78);
+      box-shadow:
+        inset 0 1px 0.5px rgba(255, 255, 255, 0.16),
+        0 2px 8px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .phone-chassis {
+      box-shadow:
+        0 34px 78px -18px rgba(15, 23, 42, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.75),
+        inset 0 1px 0.5px rgba(255, 255, 255, 0.92);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @keyframes slideUpFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-view {
+      animation: slideUpFade 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Slender Luxury Candle Flame, Halo & Wisp Animations */
+    @keyframes luxuryFlameFlicker {
+      0%, 100% { transform: scale(1, 1) rotate(-2deg); opacity: 0.96; }
+      33% { transform: scale(1.07, 0.95) rotate(1.8deg); opacity: 1; }
+      66% { transform: scale(0.96, 1.06) rotate(-1.4deg); opacity: 0.94; }
+    }
+    .luxury-flame-lit {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: luxuryFlameFlicker 0.3s ease-in-out infinite;
+    }
+
+    @keyframes candleSmokeWisp {
+      0% { opacity: 0.72; transform: translateY(0px) translateX(0px) scale(0.6); }
+      55% { opacity: 0.38; transform: translateY(-15px) translateX(4px) scale(1.1); }
+      100% { opacity: 0; transform: translateY(-28px) translateX(-3px) scale(1.45); }
+    }
+    .candle-smoke-wisp {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: candleSmokeWisp 1.2s ease-out forwards;
+    }
+
+    @keyframes cakeFloatGentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+    .cake-hero-float {
+      animation: cakeFloatGentle 4.2s ease-in-out infinite;
+    }
+
+    .patisserie-stage-dark {
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 42%, rgba(212, 175, 55, 0.07) 0%, transparent 62%),
+        linear-gradient(180deg, #12141b 0%, #0d0f14 55%, #07080b 100%);
+    }
+
+    .patisserie-stage-lit {
+      background:
+        radial-gradient(ellipse 115% 65% at 50% 44%, rgba(251, 191, 36, 0.25) 0%, rgba(245, 158, 11, 0.08) 48%, transparent 75%),
+        radial-gradient(circle at 50% 24%, rgba(253, 224, 71, 0.14) 0%, transparent 55%),
+        linear-gradient(180deg, #171923 0%, #11131a 55%, #090a0e 100%);
+    }
+  #app-switcher { display: none !important; }
+  </style>
+</head>
+<body data-app="customer" class="h-dvh w-full overflow-hidden flex flex-col">
+
+  <!-- Top Glass Switcher Bar -->
+  <header class="shrink-0 z-40 glass-bar">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-2">
+      <!-- Brand -->
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="w-8 h-8 rounded-xl theme-bg flex items-center justify-center shadow-sm shrink-0">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <div class="hidden sm:block min-w-0">
+          <h1 id="header-brand-title" class="text-sm font-bold text-slate-900 truncate">Commerce Suite</h1>
+          <p id="header-brand-sub" class="text-[11px] text-slate-500 truncate">Cake Craft</p>
+        </div>
+      </div>
+
+      <!-- Segmented App Switcher -->
+      <div id="app-switcher" class="flex items-center bg-slate-900/[0.06] p-0.5 rounded-full border border-white/75">
+        <button
+          id="switch-shopkeeper-btn"
+          type="button"
+          onclick="switchApp('shopkeeper')"
+          class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5"
+        >
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/>
+          </svg>
+          <span id="switch-shopkeeper-label">Shopkeeper App</span>
+        </button>
+
+        <button
+          id="switch-customer-btn"
+          type="button"
+          onclick="switchApp('customer')"
+          class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5"
+        >
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+          </svg>
+          <span id="switch-customer-label">Customer App</span>
+        </button>
+      </div>
+
+      <!-- Language & Reset Controls -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button
+          id="top-lang-btn"
+          type="button"
+          onclick="toggleLanguage()"
+          class="px-2.5 py-1.5 rounded-full glass-pill hover:bg-white/90 text-slate-700 text-xs font-semibold transition"
+        >
+          বাংলা
+        </button>
+        <button
+          id="top-reset-btn"
+          type="button"
+          onclick="resetAllDemoData()"
+          class="px-2.5 py-1.5 rounded-full glass-pill hover:bg-rose-50/90 text-slate-600 hover:text-rose-700 text-xs font-semibold transition flex items-center gap-1"
+        >
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+          <span id="top-reset-label">Reset</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed top-16 right-4 z-50 flex flex-col gap-2 max-w-xs w-full pointer-events-none"></div>
+
+  <!-- Locked Mobile Frame (Bottom Navigation Stays Fixed While Viewport Scrolls) -->
+  <main class="flex-1 min-h-0 w-full max-w-5xl mx-auto px-0 sm:px-6 py-0 sm:py-4 flex justify-center items-stretch overflow-hidden">
+    <div id="phone-frame" class="w-full sm:max-w-[430px] h-full glass-frame sm:rounded-[38px] phone-chassis overflow-hidden flex flex-col relative sm:border-[6px] sm:border-slate-900/95">
+
+      <!-- Status Bar Strip -->
+      <div id="device-status-strip" class="hidden sm:flex items-center justify-between px-6 pt-2.5 pb-1.5 bg-transparent text-[11px] font-semibold text-slate-700 select-none shrink-0 transition-colors duration-300">
+        <span class="font-num" id="device-clock">9:41</span>
+        <div class="w-20 h-4 bg-slate-900 rounded-full"></div>
+        <div class="flex items-center gap-1.5 text-slate-700">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
+        </div>
+      </div>
+
+      <!-- Ambient Glassmorphism Light Orbs -->
+      <div id="glass-orbs-layer" class="pointer-events-none absolute inset-0 overflow-hidden z-0">
+        <div class="w-56 h-56 rounded-full blur-3xl opacity-25 -top-10 -left-12 absolute" style="background: var(--primary);"></div>
+        <div class="w-60 h-60 rounded-full bg-sky-300/35 blur-3xl bottom-24 -right-14 absolute"></div>
+        <div class="w-44 h-44 rounded-full bg-amber-200/30 blur-3xl top-1/2 left-1/3 absolute"></div>
+      </div>
+
+      <!-- Scrollable Content Viewport -->
+      <div id="app-viewport" class="flex-1 min-h-0 overflow-y-auto overscroll-contain no-scrollbar bg-transparent relative z-10 pb-28">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Floating '+' Button (Shopkeeper Home) -->
+      <div id="floating-fab-slot" class="pointer-events-none"></div>
+
+      <!-- Fixed Split Floating Dark Glass Pill Navigation Bar -->
+      <nav
+        id="bottom-nav"
+        aria-label="Primary Navigation"
+        class="hidden shrink-0 z-30 px-3 pb-3 pt-1.5 bg-gradient-to-t from-white/80 via-white/45 to-transparent backdrop-blur-md"
+      >
+        <!-- Populated dynamically -->
+      </nav>
+    </div>
+  </main>
+
+  <!-- Modal Backdrop -->
+  <div id="modal-backdrop" class="hidden fixed inset-0 z-50 bg-slate-950/45 backdrop-blur-[6px] flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div id="modal-card" class="glass-modal w-full max-w-[440px] rounded-t-[28px] sm:rounded-[28px] max-h-[90dvh] overflow-y-auto no-scrollbar animate-view">
+      <!-- Modal content injected here -->
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYe_zWnhO9Fk34QkQar3KTu-DGt7dWYE8",
+      authDomain: "cack-craft-mehedi.firebaseapp.com",
+      projectId: "cack-craft-mehedi",
+      storageBucket: "cack-craft-mehedi.firebasestorage.app",
+      messagingSenderId: "660148427966",
+      appId: "1:660148427966:web:c152f535eaae2bea4ed2ef",
+      measurementId: "G-X84BGC9W0X"
+    };
+
+    try {
+      const firebaseApp = initializeApp(firebaseConfig);
+      const auth = getAuth(firebaseApp);
+      const db = getFirestore(firebaseApp);
+      window.firebaseAPI = {
+        createAccount: async ({email, password, name, role, profile}) => {
+          const credential = await createUserWithEmailAndPassword(auth, email, password);
+          await updateProfile(credential.user, { displayName: name });
+          await setDoc(doc(db, "users", credential.user.uid), {
+            uid: credential.user.uid, email, name, role, profile, createdAt: serverTimestamp()
+          });
+          return { uid: credential.user.uid, email, name };
+        },
+        login: async (email, password) => {
+          const credential = await signInWithEmailAndPassword(auth, email, password);
+          const profileSnap = await getDoc(doc(db, "users", credential.user.uid));
+          const profile = profileSnap.exists() ? profileSnap.data() : {};
+          return { uid: credential.user.uid, email: credential.user.email, name: credential.user.displayName || profile.name || "", role: profile.role || null };
+        },
+        logout: () => signOut(auth)
+      };
+      window.firebaseReady = true;
+    } catch (error) {
+      console.error("Firebase initialization failed:", error);
+      window.firebaseReady = false;
+      window.firebaseInitError = error;
+    }
+  </script>
+
+  <script>
+    /**
+     * =========================================================================
+     * CRISP VECTOR ICONS
+     * =========================================================================
+     */
+    const ICONS = {
+      homeOutline: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+      homeFilled: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M11.47 3.84a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.06l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 0 0 1.061 1.06l8.69-8.69Z"/><path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.43Z"/></svg>`,
+
+      ordersOutline: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>`,
+      ordersFilled: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M9 2a1 1 0 0 0-1 1v1H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 0 0-1-1H9Zm0 9.25h6a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5Zm0 4h6a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5Z"/></svg>`,
+
+      menuOutline: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>`,
+      menuFilled: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/></svg>`,
+
+      bellOutline: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>`,
+      bellFilled: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a6 6 0 0 0-6 6c0 6.53-2.61 8.53-2.72 8.61A1 1 0 0 0 4 18.5h16a1 1 0 0 0 .72-1.89C20.61 16.53 18 14.53 18 8a6 6 0 0 0-6-6Zm-1.7 19a2 2 0 0 0 3.4 0h-3.4Z"/></svg>`,
+
+      cartOutline: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+      cartFilled: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 2A1.5 1.5 0 0 0 5.3 2.6L3 5.67V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5.67L18.7 2.6A1.5 1.5 0 0 0 17.5 2h-11ZM12 13a4.5 4.5 0 0 1-4.5-4.5.75.75 0 0 1 1.5 0 3 3 0 0 0 6 0 .75.75 0 0 1 1.5 0A4.5 4.5 0 0 1 12 13Z"/></svg>`,
+
+      plus: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+      edit: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>`,
+      shield: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>`,
+      settings: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+      store: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>`,
+      whatsapp: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`,
+      cake: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/></svg>`,
+      camera: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>`,
+      pin: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      play: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+      check: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      chevronRight: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,
+      arrowLeft: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
+      trash: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`,
+      volume: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`,
+      logout: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`
+    };
+
+    /**
+     * =========================================================================
+     * ENGLISH-FIRST LANGUAGE ENGINE (BANGLA ONLY WHEN SELECTED IN SETTINGS)
+     * =========================================================================
+     */
+    const BENGALI_MAP = {
+      'Commerce Suite': 'কমার্স স্যুট',
+      'Glassmorphism • Shopkeeper & Customer Apps': 'গ্লাসমরফিজম • দোকানদার ও কাস্টমার অ্যাপস',
+      'Shopkeeper App': 'দোকানদার অ্যাপ',
+      'Customer App': 'কাস্টমার অ্যাপ',
+      'Reset': 'রিসেট',
+      'Home': 'হোম',
+      'Orders': 'অর্ডার',
+      'Menu': 'মেনু',
+      'Alerts': 'মেসেজ',
+      'Cart': 'কার্ট',
+      'Profile': 'প্রোফাইল',
+      'Light Candles': 'মোমবাতি জ্বালান',
+      'Extinguish Candles': 'মোমবাতি নিভান',
+      'Fan Running': 'ফ্যান চলছে',
+      'Tap fan to blow out candles': 'মোমবাতি নেভাতে ফ্যানে ট্যাপ করুন',
+      'Tap cake or button to light candles': 'মোমবাতি জ্বালাতে কেক বা বাটনে ট্যাপ করুন',
+      'Light the cake candles to reveal Sign Up and Login.': 'সাইন আপ ও লগইন দেখতে কেকের মোমবাতি জ্বালান।',
+      'Create Account': 'অ্যাকাউন্ট তৈরি করুন',
+      'Sign up required before login': 'লগইনের আগে সাইন আপ আবশ্যক',
+      'Quick Demo': 'কুইক ডেমো',
+      'Shopkeeper Name': 'দোকানদারের নাম',
+      'Full Name': 'পূর্ণ নাম',
+      'Shop Name': 'দোকানের নাম',
+      'Phone': 'ফোন নম্বর',
+      'Phone Number': 'ফোন নম্বর',
+      'Password': 'পাসওয়ার্ড',
+      'Address': 'ঠিকানা',
+      'Sign Up': 'সাইন আপ',
+      'Sign Up Required': 'সাইন আপ প্রয়োজন',
+      'Please complete sign up before logging in.': 'লগইন করার আগে অনুগ্রহ করে সাইন আপ সম্পন্ন করুন।',
+      'Go to Sign Up': 'সাইন আপে যান',
+      'Login': 'লগইন',
+      'Account:': 'অ্যাকাউন্ট:',
+      'New Sign Up': 'নতুন সাইন আপ',
+      'Sound On': 'সাউন্ড চালু',
+      'Tap for Sound': 'সাউন্ড চালু করুন',
+      'Skip': 'স্কিপ',
+      'Enter Store': 'স্টোরে প্রবেশ করুন',
+      'Category': 'ক্যাটাগরি',
+      'All': 'সব',
+      'No products in this category': 'এই ক্যাটাগরিতে কোনো পণ্য নেই',
+      'Add Product': 'পণ্য যোগ করুন',
+      'Custom per pound': 'পাউন্ড অনুযায়ী',
+      'Stock:': 'স্টক:',
+      'New Category': 'নতুন ক্যাটাগরি',
+      '"Cake" is the default category. Create additional categories below.': '"Cake" ডিফল্ট ক্যাটাগরি। নিচে নতুন ক্যাটাগরি তৈরি করুন।',
+      'Category Name': 'ক্যাটাগরির নাম',
+      'e.g. Pastries or Beverages': 'যেমন: পেস্ট্রি বা পানীয়',
+      'Cancel': 'বাতিল',
+      'Create': 'তৈরি করুন',
+      'Edit Product': 'পণ্য এডিট করুন',
+      '+ New Category': '+ নতুন ক্যাটাগরি',
+      '(Default Cake)': '(ডিফল্ট কেক)',
+      'Photos': 'ছবিসমূহ',
+      'Upload': 'আপলোড',
+      '+ Cake Photo': '+ কেক ছবি',
+      '+ Cookie Photo': '+ কুকিজ ছবি',
+      'Product Name': 'পণ্যের নাম',
+      'Enter product name': 'পণ্যের নাম লিখুন',
+      'Description': 'বর্ণনা',
+      'Product details': 'পণ্যের বিবরণ লিখুন',
+      'Delete': 'ডিলিট',
+      'Save': 'সেভ করুন',
+      'Cake — Price Per Pound': 'কেক — প্রতি পাউন্ড মূল্য',
+      'Price per Pound (৳)': 'প্রতি পাউন্ড মূল্য (৳)',
+      'Unit Type': 'বিক্রির একক',
+      'Piece': 'পিস',
+      'Gram': 'গ্রাম',
+      'Price (৳)': 'মূল্য (৳)',
+      'Stock': 'স্টক',
+      'No photos selected': 'কোনো ছবি নির্বাচন করা হয়নি',
+      'Order Alerts': 'অর্ডার মেসেজ',
+      'Alerts appear only when a customer places an order': 'কাস্টমার অর্ডার করলে শুধুমাত্র তখনই মেসেজ আসবে',
+      'Clear All': 'সব মুছুন',
+      'No order alerts yet': 'এখনো কোনো অর্ডার মেসেজ নেই',
+      'New orders from Customer App will notify you here.': 'কাস্টমার অ্যাপ থেকে নতুন অর্ডার এলে এখানে দেখাবে।',
+      'View Orders': 'অর্ডার দেখুন',
+      'Active Orders': 'সক্রিয় অর্ডার',
+      'Ordered item photos are shown below; completed orders move to Trust': 'অর্ডার করা পণ্যের ছবি নিচে দেখানো হয়েছে; সম্পন্ন হলে ট্রাস্ট-এ যাবে',
+      'Ordered Items & Pictures': 'অর্ডার করা পণ্য ও ছবি',
+      'Trust': 'ট্রাস্ট',
+      'No active orders': 'কোনো সক্রিয় অর্ডার নেই',
+      'Completed orders are stored in Menu → Trust.': 'সম্পন্ন অর্ডার মেনু → ট্রাস্ট-এ সংরক্ষিত থাকে।',
+      'Shopkeeper Profile': 'দোকানদার প্রোফাইল',
+      'Photo': 'ছবি',
+      'Name': 'নাম',
+      'Save Profile': 'প্রোফাইল সেভ করুন',
+      'Logout': 'লগআউট',
+      'Completed orders': 'সম্পন্ন অর্ডারসমূহ',
+      'Store info, theme, intro video, WhatsApp & delivery zones': 'দোকানের তথ্য, থিম, ইন্ট্রো ভিডিও, হোয়াটসঅ্যাপ ও ডেলিভারি এরিয়া',
+      'Store Settings': 'স্টোর সেটিংস',
+      'Brand & Info': 'ব্র্যান্ড ও তথ্য',
+      'Change Logo': 'লোগো পরিবর্তন',
+      'Shop Address': 'দোকানের ঠিকানা',
+      'Theme Color': 'থিম কালার',
+      'Customer Intro Video': 'কাস্টমার ইন্ট্রো ভিডিও',
+      'Upload Video': 'ভিডিও আপলোড',
+      'Default Video': 'ডিফল্ট ভিডিও',
+      'WhatsApp & Facebook': 'হোয়াটসঅ্যাপ ও ফেসবুক',
+      'WhatsApp Number': 'হোয়াটসঅ্যাপ নম্বর',
+      'Facebook Page URL': 'ফেসবুক পেজ লিংক',
+      'Delivery Zones': 'ডেলিভারি এরিয়া',
+      '+ Add Zone': '+ এরিয়া যোগ',
+      'Save Settings': 'সেটিংস সেভ করুন',
+      'No delivery zones configured': 'কোনো ডেলিভারি এরিয়া যুক্ত করা হয়নি',
+      'Area name': 'এরিয়ার নাম',
+      'Fee': 'চার্জ',
+      'Intro': 'ইন্ট্রো',
+      'No products found': 'কোনো পণ্য পাওয়া যায়নি',
+      'Custom pound & note': 'কাস্টম পাউন্ড ও লেখা',
+      'Out of stock': 'স্টক শেষ',
+      'Details': 'বিস্তারিত',
+      'Choose pounds & custom inscription at checkout': 'চেকআউটে পাউন্ড ও কেকের লেখা দিন',
+      'Currently out of stock': 'বর্তমানে স্টকে নেই',
+      'Available Stock:': 'স্টকে আছে:',
+      'About (WhatsApp)': 'অ্যাবাউট (হোয়াটসঅ্যাপ)',
+      'Add to Cart': 'কার্টে যোগ করুন',
+      'Your Cart is Empty': 'আপনার কার্ট খালি',
+      'Add cakes or products from Home to checkout.': 'চেকআউট করতে হোম থেকে পণ্য কার্টে যোগ করুন।',
+      'Browse Products': 'পণ্য দেখুন',
+      'Cart & Checkout': 'কার্ট ও চেকআউট',
+      'Order & Delivery Details': 'অর্ডার ও ডেলিভারি তথ্য',
+      'Cake Weight & Inscription': 'কেকের পাউন্ড ও লেখা',
+      'Cake Pounds': 'কেকের পাউন্ড',
+      'Text to Write on Cake': 'কেকের ওপর যা লিখতে হবে',
+      'e.g. Happy Birthday!': 'যেমন: শুভ জন্মদিন!',
+      'Delivery Area': 'ডেলিভারি এরিয়া',
+      'Delivery Address': 'ডেলিভারির ঠিকানা',
+      'Subtotal': 'সাবটোটাল',
+      'Delivery Fee': 'ডেলিভারি চার্জ',
+      'Total': 'সর্বমোট',
+      'Place Order': 'অর্ডার করুন',
+      'My Orders': 'আমার অর্ডার',
+      'Completed orders automatically move to Menu → Trust': 'সম্পন্ন অর্ডার স্বয়ংক্রিয়ভাবে মেনু → ট্রাস্ট-এ চলে যায়',
+      'View delivered orders in Menu → Trust.': 'সম্পন্ন অর্ডার দেখতে মেনু → ট্রাস্ট দেখুন।',
+      'Customer Profile': 'কাস্টমার প্রোফাইল',
+      'Update Profile': 'প্রোফাইল আপডেট',
+      'Store info, address & social links': 'দোকানের তথ্য, ঠিকানা ও সোশ্যাল লিংক',
+      'Customize your theme color': 'আপনার পছন্দমতো থিম কালার বদলান',
+      'About': 'অ্যাবাউট',
+      'Settings': 'সেটিংস',
+      'WhatsApp': 'হোয়াটসঅ্যাপ',
+      'Chat on WhatsApp': 'হোয়াটসঅ্যাপে মেসেজ করুন',
+      'Visit Facebook Page': 'ফেসবুক পেজ ভিজিট করুন',
+      'Customer:': 'ক্রেতা:',
+      'Zone:': 'এরিয়া:',
+      'Pending': 'অপেক্ষমান',
+      'Preparing': 'প্রস্তুত হচ্ছে',
+      'Out for Delivery': 'ডেলিভারিতে আছে',
+      'Complete → Trust': 'সম্পন্ন → ট্রাস্ট',
+      'Trust — Completed Orders': 'ট্রাস্ট — সম্পন্ন অর্ডার',
+      'Completed deliveries archived here': 'সম্পন্ন ডেলিভারি এখানে সংরক্ষিত আছে',
+      'Delivered orders appear here automatically': 'সম্পন্ন অর্ডার স্বয়ংক্রিয়ভাবে এখানে আসে',
+      'No completed orders in Trust': 'ট্রাস্ট-এ কোনো সম্পন্ন অর্ডার নেই',
+      'Completed orders automatically move here.': 'সম্পন্ন অর্ডার স্বয়ংক্রিয়ভাবে এখানে চলে আসে।',
+      'Delivered': 'ডেলিভারি সম্পন্ন',
+      'Pounds:': 'পাউন্ড:',
+      'Note:': 'লেখা:',
+      'pound': 'পাউন্ড',
+      'gram': 'গ্রাম',
+      'piece': 'পিস',
+      'Cake': 'কেক',
+      'Artisan Cookies': 'আর্টিজান কুকিজ',
+      'Gourmet Snacks': 'গুরমে স্ন্যাকস',
+      'Dhaka City': 'ঢাকা সিটি',
+      'Uttara & Mirpur': 'উত্তরা ও মিরপুর',
+      'Chattogram & Sylhet': 'চট্টগ্রাম ও সিলেট'
+    };
+
+    const REVERSE_BENGALI_MAP = Object.fromEntries(
+      Object.entries(BENGALI_MAP).map(([en, bn]) => [bn, en])
+    );
+
+    function L(text) {
+      const str = String(text ?? '');
+      if (appState.lang === 'bn') {
+        return BENGALI_MAP[str] || str;
+      }
+      return REVERSE_BENGALI_MAP[str] || str;
+    }
+
+    function formatCurrency(amount) {
+      const num = Number(amount || 0);
+      if (appState.lang === 'bn') {
+        return '৳' + num.toLocaleString('bn-BD', {
+          maximumFractionDigits: num % 1 === 0 ? 0 : 2
+        });
+      }
+      return '৳' + num.toLocaleString('en-US', {
+        maximumFractionDigits: num % 1 === 0 ? 0 : 2
+      });
+    }
+
+    function formatUnitLabel(unitType) {
+      return L(unitType);
+    }
+
+    function formatOrderStatus(status) {
+      const map = {
+        pending: 'Pending',
+        preparing: 'Preparing',
+        out_for_delivery: 'Out for Delivery'
+      };
+      return L(map[status] || status);
+    }
+
+    /**
+     * =========================================================================
+     * STATE & STORAGE (DEFAULT LANGUAGE IS STRICTLY 'en')
+     * =========================================================================
+     */
+    const STORAGE_KEY = 'cake_craft_shared_store_v1';
+
+    const DEFAULT_IMAGES = {
+      cake1: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85',
+      cake2: 'https://images.unsplash.com/photo-1562777717-dc6984f65a63?auto=format&fit=crop&w=900&q=85',
+      cake3: 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=85',
+      cookie1: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=85',
+      pastry1: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=85',
+      snack1: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85',
+      logo: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=85',
+      avatarAdmin: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=85',
+      avatarCustomer: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=85',
+      placeholder: 'https://placehold.co/600x450/f1f5f9/475569?text=Product'
+    };
+
+    const DEFAULT_INTRO_VIDEO = 'https://assets.mixkit.co/videos/preview/mixkit-chef-decorating-a-chocolate-cake-with-cream-43235-large.mp4';
+
+    let authCandlesLit = false;
+    let authSmokeActive = false;
+    let authViewOverride = null;
+    let smokeResetTimeoutId = null;
+
+    function isCakeCategoryObj(catObj) {
+      if (!catObj) return false;
+      const lower = String(catObj.name || '').trim().toLowerCase();
+      return Boolean(catObj.isDefaultCake || lower === 'cake' || catObj.name === 'কেক');
+    }
+
+    function playCandleSound(mode) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+
+        if (mode === 'ignite') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(540, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(1180, ctx.currentTime + 0.085);
+          gain.gain.setValueAtTime(0.14, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.095);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.1);
+        } else {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(260, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(105, ctx.currentTime + 0.22);
+          gain.gain.setValueAtTime(0.12, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.23);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.24);
+        }
+      } catch {}
+    }
+
+    function lightCakeCandles() {
+      authSmokeActive = false;
+      authCandlesLit = true;
+      if (smokeResetTimeoutId) {
+        clearTimeout(smokeResetTimeoutId);
+        smokeResetTimeoutId = null;
+      }
+      playCandleSound('ignite');
+      renderApp();
+    }
+
+    function extinguishCakeCandles() {
+      const hadLitCandles = authCandlesLit;
+      authCandlesLit = false;
+      authSmokeActive = hadLitCandles;
+      playCandleSound('extinguish');
+      renderApp();
+
+      if (smokeResetTimeoutId) clearTimeout(smokeResetTimeoutId);
+      smokeResetTimeoutId = setTimeout(() => {
+        authSmokeActive = false;
+        renderApp();
+      }, 1300);
+    }
+
+    function toggleCakeCandles() {
+      if (authCandlesLit) {
+        extinguishCakeCandles();
+      } else {
+        lightCakeCandles();
+      }
+    }
+
+    function switchAuthModeView(targetView) {
+      authViewOverride = targetView;
+      renderApp();
+    }
+
+    function createInitialState() {
+      return {
+        currentApp: 'shopkeeper',
+        lang: 'en',
+
+        auth: {
+          shopkeeper: {
+            signedUp: false,
+            loggedIn: false,
+            user: null
+          },
+          customer: {
+            signedUp: false,
+            loggedIn: false,
+            user: null
+          }
+        },
+
+        customerIntroPending: false,
+
+        activeTab: {
+          shopkeeper: 'home',
+          customer: 'home'
+        },
+
+        menuSubView: {
+          shopkeeper: 'main',
+          customer: 'main'
+        },
+
+        shopSettings: {
+          shopName: 'Cake Craft',
+          shopLogo: DEFAULT_IMAGES.logo,
+          themeColor: '#0f766e',
+          shopAddress: '',
+          introVideoUrl: DEFAULT_INTRO_VIDEO,
+          facebookLink: '',
+          whatsappNumber: '',
+          deliveryAreas: []
+        },
+
+        categories: [
+          { id: 'cat-cake', name: 'Cake', isDefaultCake: true }
+        ],
+        selectedCategoryId: {
+          shopkeeper: 'all',
+          customer: 'all'
+        },
+
+        products: [],
+
+        cart: [],
+
+        orders: [],
+
+        trustOrders: [],
+
+        messages: []
+      };
+    }
+
+    let appState = loadState();
+    appState.currentApp = document.body.dataset.app === 'shopkeeper' ? 'shopkeeper' : 'customer';
+    saveState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          const initial = createInitialState();
+          saveState(initial);
+          return initial;
+        }
+        const parsed = JSON.parse(raw);
+        return {
+          ...createInitialState(),
+          ...parsed,
+          lang: parsed.lang === 'bn' ? 'bn' : 'en'
+        };
+      } catch {
+        return createInitialState();
+      }
+    }
+
+    function saveState(stateObj = appState) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
+      } catch {}
+    }
+
+    function resetAllDemoData() {
+      localStorage.removeItem(STORAGE_KEY);
+      appState = createInitialState();
+      authCandlesLit = false;
+      authSmokeActive = false;
+      authViewOverride = null;
+      saveState();
+      applyThemeColor();
+      syncDocumentLanguage();
+      updateTopSwitcherUI();
+      renderApp();
+      showToast(L('Reset'), 'success');
+    }
+
+    function syncDocumentLanguage() {
+      const isBn = appState.lang === 'bn';
+      document.documentElement.lang = isBn ? 'bn' : 'en';
+      document.body.classList.toggle('lang-bn', isBn);
+    }
+
+    function toggleLanguage() {
+      appState.lang = appState.lang === 'en' ? 'bn' : 'en';
+      saveState();
+      syncDocumentLanguage();
+      updateTopSwitcherUI();
+      renderApp();
+      showToast(
+        appState.lang === 'bn' ? 'ভাষা বাংলায় পরিবর্তন হয়েছে' : 'Language set to English',
+        'success'
+      );
+    }
+
+    function setAppLanguage(newLang) {
+      appState.lang = newLang === 'bn' ? 'bn' : 'en';
+      saveState();
+      syncDocumentLanguage();
+      updateTopSwitcherUI();
+      renderApp();
+      showToast(
+        appState.lang === 'bn' ? 'ভাষা বাংলায় পরিবর্তন হয়েছে' : 'Language set to English',
+        'success'
+      );
+    }
+
+    function applyThemeColor() {
+      const hex = appState.shopSettings.themeColor || '#0f766e';
+      document.documentElement.style.setProperty('--primary', hex);
+      document.documentElement.style.setProperty('--primary-hover', shadeHexColor(hex, -14));
+      document.documentElement.style.setProperty('--primary-soft', hexToRgba(hex, 0.14));
+      document.documentElement.style.setProperty('--primary-border', hexToRgba(hex, 0.34));
+    }
+
+    function shadeHexColor(hex, percent) {
+      try {
+        let clean = hex.replace('#', '');
+        if (clean.length === 3) clean = clean.split('').map(c => c + c).join('');
+        const num = parseInt(clean, 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.max(0, Math.min(255, (num >> 16) + amt));
+        const G = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amt));
+        const B = Math.max(0, Math.min(255, (num & 0x0000FF) + amt));
+        return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+      } catch {
+        return hex;
+      }
+    }
+
+    function hexToRgba(hex, alpha) {
+      try {
+        let clean = hex.replace('#', '');
+        if (clean.length === 3) clean = clean.split('').map(c => c + c).join('');
+        const num = parseInt(clean, 16);
+        const R = (num >> 16) & 255;
+        const G = (num >> 8) & 255;
+        const B = num & 255;
+        return `rgba(${R}, ${G}, ${B}, ${alpha})`;
+      } catch {
+        return 'rgba(15, 118, 110, 0.14)';
+      }
+    }
+
+    function updateTopSwitcherUI() {
+      document.getElementById('header-brand-title').textContent = 'Cake Craft';
+      document.getElementById('header-brand-sub').textContent = 'Cake Craft';
+      document.getElementById('switch-shopkeeper-label').textContent = L('Shopkeeper App');
+      document.getElementById('switch-customer-label').textContent = L('Customer App');
+      document.getElementById('top-lang-btn').textContent = appState.lang === 'en' ? 'বাংলা' : 'English';
+      document.getElementById('top-reset-label').textContent = L('Reset');
+
+      const skBtn = document.getElementById('switch-shopkeeper-btn');
+      const cuBtn = document.getElementById('switch-customer-btn');
+
+      if (appState.currentApp === 'shopkeeper') {
+        skBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 theme-bg shadow-sm';
+        cuBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900';
+      } else {
+        cuBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 theme-bg shadow-sm';
+        skBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900';
+      }
+    }
+
+    function switchApp(appName) {
+      const lockedRole = document.body.dataset.app === 'shopkeeper' ? 'shopkeeper' : 'customer';
+      appState.currentApp = lockedRole;
+      authViewOverride = null;
+      if (lockedRole === 'customer' && appState.auth.customer.loggedIn) {
+        appState.customerIntroPending = true;
+      }
+      saveState();
+      updateTopSwitcherUI();
+      renderApp();
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      const palette = {
+        success: 'bg-slate-900/90 text-white border-emerald-400/40',
+        error: 'bg-rose-950/90 text-white border-rose-400/50',
+        info: 'bg-slate-900/90 text-white border-white/15'
+      };
+      el.className = `px-4 py-3 rounded-2xl border backdrop-blur-xl shadow-2xl text-xs font-medium pointer-events-auto animate-view flex items-center gap-2 ${palette[type] || palette.info}`;
+      el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${type === 'error' ? 'bg-rose-400' : 'bg-emerald-400'} shrink-0"></span><span>${escapeHtml(message)}</span>`;
+      container.appendChild(el);
+
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-4px)';
+        el.style.transition = 'all 0.2s ease';
+        setTimeout(() => el.remove(), 220);
+      }, 2600);
+    }
+
+    function openModal(htmlContent) {
+      const backdrop = document.getElementById('modal-backdrop');
+      const card = document.getElementById('modal-card');
+      card.innerHTML = htmlContent;
+      backdrop.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      const backdrop = document.getElementById('modal-backdrop');
+      const card = document.getElementById('modal-card');
+      backdrop.classList.add('hidden');
+      card.innerHTML = '';
+    }
+
+    document.getElementById('modal-backdrop').addEventListener('click', (e) => {
+      if (e.target.id === 'modal-backdrop') closeModal();
+    });
+
+    /**
+     * =========================================================================
+     * MAIN RENDER DISPATCHER
+     * =========================================================================
+     */
+    function renderApp() {
+      applyThemeColor();
+      syncDocumentLanguage();
+      updateTopSwitcherUI();
+
+      const appName = appState.currentApp;
+      const roleAuth = appState.auth[appName];
+      const viewport = document.getElementById('app-viewport');
+      const bottomNav = document.getElementById('bottom-nav');
+      const fabSlot = document.getElementById('floating-fab-slot');
+      const statusStrip = document.getElementById('device-status-strip');
+      const orbsLayer = document.getElementById('glass-orbs-layer');
+
+      viewport.scrollTop = 0;
+
+      // 1. Premium Cake & Slender Candles Auth Gate (No Ceiling Fan)
+      if (!roleAuth.signedUp || !roleAuth.loggedIn) {
+        bottomNav.classList.add('hidden');
+        fabSlot.innerHTML = '';
+        if (orbsLayer) orbsLayer.classList.add('hidden');
+        if (statusStrip) {
+          statusStrip.className = 'hidden sm:flex items-center justify-between px-6 pt-2.5 pb-1.5 bg-[#12141b] text-[11px] font-semibold text-slate-300 select-none shrink-0 z-20 transition-colors duration-300';
+        }
+        viewport.className = 'flex-1 min-h-0 overflow-y-auto overscroll-contain no-scrollbar relative z-10 pb-8 transition-all duration-500 ' + (authCandlesLit ? 'patisserie-stage-lit' : 'patisserie-stage-dark');
+
+        const activeAuthMode = authViewOverride || (!roleAuth.signedUp ? 'signup' : 'login');
+        viewport.innerHTML = renderCakeOnlyAuthShell(appName, activeAuthMode);
+        return;
+      }
+
+      authViewOverride = null;
+
+      // 2. Customer Full-Screen Portrait Auto-Play Intro Video after Login
+      if (appName === 'customer' && appState.customerIntroPending) {
+        bottomNav.classList.add('hidden');
+        fabSlot.innerHTML = '';
+        if (orbsLayer) orbsLayer.classList.add('hidden');
+        if (statusStrip) statusStrip.className = 'hidden';
+        viewport.className = 'flex-1 min-h-0 overflow-hidden bg-black relative z-20 p-0';
+        viewport.innerHTML = renderCustomerIntroVideoScreen();
+        startPortraitIntroVideoAutoplay();
+        return;
+      }
+
+      // 3. Active App Screen + Fixed Split Dark Glass Pill Navigation
+      if (orbsLayer) orbsLayer.classList.remove('hidden');
+      if (statusStrip) {
+        statusStrip.className = 'hidden sm:flex items-center justify-between px-6 pt-2.5 pb-1.5 bg-transparent text-[11px] font-semibold text-slate-700 select-none shrink-0 z-10 transition-colors duration-300';
+      }
+      viewport.className = 'flex-1 min-h-0 overflow-y-auto overscroll-contain no-scrollbar bg-transparent relative z-10 pb-28';
+
+      bottomNav.classList.remove('hidden');
+      if (appName === 'shopkeeper') {
+        renderShopkeeperBottomNav(bottomNav);
+        viewport.innerHTML = renderShopkeeperScreen();
+        fabSlot.innerHTML = appState.activeTab.shopkeeper === 'home'
+          ? `<button
+              type="button"
+              onclick="openAddProductModal()"
+              aria-label="${escapeAttr(L('Add Product'))}"
+              class="pointer-events-auto absolute bottom-24 right-4 w-12 h-12 rounded-2xl theme-bg theme-bg-hover shadow-xl flex items-center justify-center z-20 transition transform active:scale-95 ring-4 ring-white/75"
+            >
+              ${ICONS.plus}
+            </button>`
+          : '';
+      } else {
+        fabSlot.innerHTML = '';
+        renderCustomerBottomNav(bottomNav);
+        viewport.innerHTML = renderCustomerScreen();
+      }
+    }
+
+    /**
+     * =========================================================================
+     * PREMIUM MULTI-TIER CAKE & SLENDER CANDLES AUTH GATE (FAN REMOVED)
+     * =========================================================================
+     */
+    function renderCakeOnlyAuthShell(appName, mode) {
+      const isShop = appName === 'shopkeeper';
+      const lit = authCandlesLit;
+      const smoke = authSmokeActive;
+
+      return `
+        <div class="min-h-full flex flex-col justify-between px-4 sm:px-5 pb-6 relative overflow-hidden select-none">
+          <!-- Top Bar: Role Pill & Single Candle Toggle Button -->
+          <div class="flex items-center justify-between pt-3 z-20">
+            <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase border backdrop-blur-md transition-colors duration-300 ${
+              lit
+                ? 'bg-amber-400/15 text-amber-200 border-amber-400/35'
+                : 'bg-white/[0.06] text-slate-300 border-white/10'
+            }">
+              ${escapeHtml(L(isShop ? 'Shopkeeper App' : 'Customer App'))}
+            </span>
+
+            <button
+              type="button"
+              onclick="toggleCakeCandles()"
+              class="px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border backdrop-blur-md transition-all active:scale-95 ${
+                lit
+                  ? 'bg-amber-400 text-slate-950 border-amber-300 shadow-lg shadow-amber-500/25'
+                  : 'bg-white/[0.08] text-amber-200 border-amber-300/25 hover:bg-white/[0.14]'
+              }"
+            >
+              <span class="w-2 h-2 rounded-full ${lit ? 'bg-slate-950' : 'bg-amber-400 animate-pulse'}"></span>
+              <span>${escapeHtml(L(lit ? 'Extinguish Candles' : 'Light Candles'))}</span>
+            </button>
+          </div>
+
+          <!-- Hero Multi-Tier Cake With Slender Candles -->
+          <div class="relative flex flex-col items-center justify-center z-20 ${lit ? 'mt-1' : 'my-auto'}">
+            <div
+              onclick="toggleCakeCandles()"
+              role="button"
+              tabindex="0"
+              aria-label="${escapeAttr(L(lit ? 'Extinguish Candles' : 'Light Candles'))}"
+              class="cursor-pointer group relative w-full max-w-[332px] h-[196px] flex items-center justify-center cake-hero-float focus:outline-none"
+            >
+              <svg width="332" height="196" viewBox="0 0 332 196" class="overflow-visible">
+                <defs>
+                  <radialGradient id="candleWarmAura" cx="50%" cy="34%" r="58%">
+                    <stop offset="0%" stop-color="#fde047" stop-opacity="0.52" />
+                    <stop offset="48%" stop-color="#f59e0b" stop-opacity="0.18" />
+                    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+                  </radialGradient>
+                  <radialGradient id="flameCoreGlow" cx="50%" cy="65%" r="55%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="45%" stop-color="#fde047" />
+                    <stop offset="100%" stop-color="#f97316" />
+                  </radialGradient>
+                  <linearGradient id="velvetCocoaTier" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#2c1108" />
+                    <stop offset="35%" stop-color="#5c2411" />
+                    <stop offset="68%" stop-color="#7c3218" />
+                    <stop offset="100%" stop-color="#240d06" />
+                  </linearGradient>
+                  <linearGradient id="upperGanacheTier" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#3a160b" />
+                    <stop offset="50%" stop-color="#6e2b14" />
+                    <stop offset="100%" stop-color="#290f07" />
+                  </linearGradient>
+                  <linearGradient id="ivoryGlazeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#fde68a" />
+                    <stop offset="50%" stop-color="#fffdf7" />
+                    <stop offset="100%" stop-color="#fcd34d" />
+                  </linearGradient>
+                  <linearGradient id="champagneGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#92400e" />
+                    <stop offset="30%" stop-color="#fbbf24" />
+                    <stop offset="55%" stop-color="#fef08a" />
+                    <stop offset="80%" stop-color="#d97706" />
+                    <stop offset="100%" stop-color="#78350f" />
+                  </linearGradient>
+                  <linearGradient id="porcelainPlateGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#cbd5e1" />
+                    <stop offset="50%" stop-color="#f8fafc" />
+                    <stop offset="100%" stop-color="#94a3b8" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Ambient Candlelight Glow -->
+                <ellipse
+                  cx="166"
+                  cy="88"
+                  rx="142"
+                  ry="74"
+                  fill="url(#candleWarmAura)"
+                  class="transition-opacity duration-500 ${lit ? 'opacity-100' : 'opacity-0'}"
+                />
+
+                <!-- Table Shadow & Pedestal Cake Stand -->
+                <ellipse cx="166" cy="186" rx="92" ry="7.5" fill="#000000" opacity="0.45" />
+                <ellipse cx="166" cy="182" rx="72" ry="6" fill="url(#champagneGoldGrad)" />
+                <path d="M146 164 L186 164 L198 181 L134 181 Z" fill="url(#champagneGoldGrad)" />
+                <ellipse cx="166" cy="162" rx="124" ry="12" fill="url(#porcelainPlateGrad)" />
+                <ellipse cx="166" cy="160" rx="116" ry="9.5" fill="#f8fafc" />
+                <ellipse cx="166" cy="160" rx="108" ry="7.2" fill="none" stroke="url(#champagneGoldGrad)" stroke-width="1.2" opacity="0.7" />
+
+                <!-- Tier 1 (Base Tier) -->
+                <rect x="66" y="114" width="200" height="45" rx="12" fill="url(#velvetCocoaTier)" stroke="url(#champagneGoldGrad)" stroke-width="0.9" />
+                <!-- Gold Rim & Pearl Trim on Base Tier -->
+                <rect x="68" y="148" width="196" height="3.5" rx="1.75" fill="url(#champagneGoldGrad)" />
+                <g fill="#fef3c7" opacity="0.9">
+                  <circle cx="84" cy="144" r="2.2" />
+                  <circle cx="111" cy="144" r="2.2" />
+                  <circle cx="138" cy="144" r="2.2" />
+                  <circle cx="166" cy="144" r="2.4" />
+                  <circle cx="194" cy="144" r="2.2" />
+                  <circle cx="221" cy="144" r="2.2" />
+                  <circle cx="248" cy="144" r="2.2" />
+                </g>
+                <!-- Luscious Cream Drip Over Tier 1 -->
+                <path
+                  d="M66 122 C66 111, 266 111, 266 122 L266 131 C253 139, 241 124, 227 134 C213 143, 200 126, 185 135 C170 144, 156 126, 141 135 C126 144, 112 126, 97 135 C83 142, 73 131, 66 127 Z"
+                  fill="url(#ivoryGlazeGrad)"
+                />
+
+                <!-- Tier 2 (Upper Tier) -->
+                <rect x="98" y="76" width="136" height="38" rx="10" fill="url(#upperGanacheTier)" stroke="url(#champagneGoldGrad)" stroke-width="0.9" />
+                <rect x="100" y="105" width="132" height="2.8" rx="1.4" fill="url(#champagneGoldGrad)" />
+                <!-- Ivory Frosting Crown on Upper Tier -->
+                <path
+                  d="M98 83 C98 73, 234 73, 234 83 L234 91 C220 97, 206 85, 191 92 C176 99, 162 86, 147 92 C132 98, 117 86, 105 92 C101 94, 99 90, 98 88 Z"
+                  fill="url(#ivoryGlazeGrad)"
+                />
+                <!-- Gold Sugar Pearls Along Upper Crown -->
+                <g fill="#facc15">
+                  <circle cx="114" cy="78" r="2.4" />
+                  <circle cx="140" cy="76.5" r="2.4" />
+                  <circle cx="166" cy="76" r="2.7" />
+                  <circle cx="192" cy="76.5" r="2.4" />
+                  <circle cx="218" cy="78" r="2.4" />
+                </g>
+
+                <!-- Slender Candle 1 (Left) -->
+                <g>
+                  <rect x="122" y="44" width="6.5" height="32" rx="2.5" fill="#fffdf9" stroke="#e2e8f0" stroke-width="0.7" />
+                  <line x1="122" y1="52" x2="128.5" y2="55" stroke="#d4af37" stroke-width="1.4" />
+                  <line x1="122" y1="62" x2="128.5" y2="65" stroke="#d4af37" stroke-width="1.4" />
+                  <line x1="125.25" y1="44" x2="125.25" y2="38.5" stroke="#334155" stroke-width="1.4" />
+                  <circle
+                    cx="125.25"
+                    cy="27"
+                    r="11"
+                    fill="#fbbf24"
+                    opacity="0.26"
+                    class="transition-opacity duration-300 ${lit ? 'opacity-100' : 'opacity-0'}"
+                  />
+                  <path
+                    d="M125.25 14 C129.8 21, 130.2 27.5, 125.25 31 C120.3 27.5, 120.7 21, 125.25 14 Z"
+                    fill="url(#flameCoreGlow)"
+                    class="transition-opacity duration-300 ${lit ? 'opacity-100 luxury-flame-lit' : 'opacity-0'}"
+                  />
+                  ${smoke ? `<circle cx="125.25" cy="34" r="4.5" fill="#e2e8f0" class="candle-smoke-wisp" />` : ''}
+                </g>
+
+                <!-- Slender Candle 2 (Center Tall) -->
+                <g>
+                  <rect x="162.5" y="33" width="7" height="43" rx="2.8" fill="#fffdf9" stroke="#e2e8f0" stroke-width="0.7" />
+                  <line x1="162.5" y1="42" x2="169.5" y2="45.5" stroke="#d4af37" stroke-width="1.5" />
+                  <line x1="162.5" y1="53" x2="169.5" y2="56.5" stroke="#d4af37" stroke-width="1.5" />
+                  <line x1="162.5" y1="64" x2="169.5" y2="67.5" stroke="#d4af37" stroke-width="1.5" />
+                  <line x1="166" y1="33" x2="166" y2="27" stroke="#334155" stroke-width="1.5" />
+                  <circle
+                    cx="166"
+                    cy="14"
+                    r="14"
+                    fill="#fde047"
+                    opacity="0.3"
+                    class="transition-opacity duration-300 ${lit ? 'opacity-100' : 'opacity-0'}"
+                  />
+                  <path
+                    d="M166 1 C171.2 9, 171.8 16.5, 166 20.5 C160.2 16.5, 160.8 9, 166 1 Z"
+                    fill="url(#flameCoreGlow)"
+                    class="transition-opacity duration-300 ${lit ? 'opacity-100 luxury-flame-lit' : 'opacity-0'}"
+                  />
+                  ${smoke ? `<circle cx="166" cy="23" r="5.5" fill="#f1f5f9" class="candle-smoke-wisp" />` : ''}
+                </g>
+
+                <!-- Slender Candle 3 (Right) -->
+                <g>
+                  <rect x="203.5" y="44" width="6.5" height="32" rx="2.5" fill="#fffdf9" stroke="#e2e8f0" stroke-width="0.7" />
+                  <line x1="203.5" y1="52" x2="210" y2="55" stroke="#d4af37" stroke-width="1.4" />
+                  <line x1="203.5" y1="62" x2="210" y2="65" stroke="#d4af37" stroke-width="1.4" />
+                  <line x1="206.75" y1="44" x2="206.75" y2="38.5" stroke="#334155" stroke-width="1.4" />
+                  <circle
+                    cx="206.75"
+                    cy="27"
+                    r="11"
+                    fill="#fbbf24"
+                    opacity="0.26"
+                    class="transition-opacity duration-300 ${lit ? 'opacity-100' : 'opacity-0'}"
+                  />
+                  <path
+                    d="M206.75 14 C211.3 21, 211.7 27.5, 206.75 31 C201.8 27.5, 202.2 21, 206.75 14 Z"
+                    fill="url(#flameCoreGlow)"
+                    class="transition-opacity duration-300 ${lit ? 'opacity-100 luxury-flame-lit' : 'opacity-0'}"
+                  />
+                  ${smoke ? `<circle cx="206.75" cy="34" r="4.5" fill="#e2e8f0" class="candle-smoke-wisp" />` : ''}
+                </g>
+              </svg>
+            </div>
+
+            ${
+              !lit
+                ? `<div class="text-center px-4 mt-2 animate-view">
+                    <h2 class="text-lg font-bold text-slate-100 tracking-tight">
+                      ${escapeHtml(L(appState.shopSettings.shopName))}
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1 max-w-[270px] mx-auto leading-relaxed">
+                      ${escapeHtml(L('Light the cake candles to reveal Sign Up and Login.'))}
+                    </p>
+                  </div>`
+                : ''
+            }
+          </div>
+
+          ${
+            lit
+              ? `
+                <div class="z-20 animate-view space-y-3 mt-1">
+                  <div class="nav-capsule-inner p-1 rounded-full grid grid-cols-2 gap-1 max-w-[240px] mx-auto">
+                    <button
+                      type="button"
+                      onclick="switchAuthModeView('signup')"
+                      class="py-1.5 rounded-full text-xs font-bold transition-all ${
+                        mode === 'signup'
+                          ? 'bg-white text-slate-950 shadow-sm'
+                          : 'text-slate-300 hover:text-white'
+                      }"
+                    >
+                      ${escapeHtml(L('Sign Up'))}
+                    </button>
+                    <button
+                      type="button"
+                      onclick="switchAuthModeView('login')"
+                      class="py-1.5 rounded-full text-xs font-bold transition-all ${
+                        mode === 'login'
+                          ? 'bg-white text-slate-950 shadow-sm'
+                          : 'text-slate-300 hover:text-white'
+                      }"
+                    >
+                      ${escapeHtml(L('Login'))}
+                    </button>
+                  </div>
+
+                  ${mode === 'signup' ? renderSignUpFormCard(appName) : renderLoginFormCard(appName)}
+                </div>
+              `
+              : `<div class="h-3"></div>`
+          }
+        </div>
+      `;
+    }
+
+    function renderSignUpFormCard(appName) {
+      const isShop = appName === 'shopkeeper';
+      const defaultName = '';
+      const defaultPhone = '';
+      const defaultAddr = isShop ? L(appState.shopSettings.shopAddress) : '';
+
+      return `
+        <div class="bg-[#191a20]/84 backdrop-blur-2xl rounded-[26px] p-4 sm:p-5 text-white border border-white/15 shadow-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-base font-bold text-white">${escapeHtml(L('Create Account'))}</h2>
+              <p class="text-[11px] text-slate-400">${escapeHtml(L('Sign up required before login'))}</p>
+            </div>
+
+          </div>
+
+          <form onsubmit="handleSignUpSubmit(event, '${appName}')" class="space-y-2.5">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-300 mb-1">
+                ${escapeHtml(L(isShop ? 'Shopkeeper Name' : 'Full Name'))}
+              </label>
+              <input
+                id="signup-name"
+                type="text"
+                required
+                value="${escapeAttr(defaultName)}"
+                class="w-full px-3.5 py-2 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-medium text-white"
+              />
+            </div>
+
+            ${isShop ? `
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-300 mb-1">${escapeHtml(L('Shop Name'))}</label>
+                <input
+                  id="signup-shopname"
+                  type="text"
+                  required
+                  value="${escapeAttr(L(appState.shopSettings.shopName))}"
+                  class="w-full px-3.5 py-2 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-medium text-white"
+                />
+              </div>
+            ` : ''}
+
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-300 mb-1">ইমেইল (Firebase Login)</label>
+              <input id="signup-email" type="email" required placeholder="you@example.com" autocomplete="email" class="w-full px-3.5 py-2 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-medium text-white" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-300 mb-1">${escapeHtml(L('Phone'))}</label>
+                <input
+                  id="signup-phone"
+                  type="tel"
+                  required
+                  value="${escapeAttr(defaultPhone)}"
+                  class="w-full px-3 py-2 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-num font-medium text-white"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-300 mb-1">${escapeHtml(L('Password'))}</label>
+                <input
+                  id="signup-password"
+                  type="password"
+                  required
+                  minlength="6"
+                  placeholder="কমপক্ষে ৬ অক্ষর"
+                  class="w-full px-3 py-2 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-num text-white"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-300 mb-1">${escapeHtml(L('Address'))}</label>
+              <input
+                id="signup-address"
+                type="text"
+                required
+                value="${escapeAttr(defaultAddr)}"
+                class="w-full px-3.5 py-2 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-medium text-white"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-[0.99] mt-1"
+            >
+              ${escapeHtml(L('Sign Up'))}
+            </button>
+          </form>
+        </div>
+      `;
+    }
+
+    async function handleSignUpSubmit(e, appName) {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim().toLowerCase();
+      const phone = document.getElementById('signup-phone').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const address = document.getElementById('signup-address').value.trim();
+      if (!window.firebaseReady || !window.firebaseAPI) {
+        showToast('Firebase চালু হয়নি। ইন্টারনেট ও Firebase সেটিংস পরীক্ষা করুন।', 'error');
+        return;
+      }
+      const shopNameInput = document.getElementById('signup-shopname');
+      const shopName = appName === 'shopkeeper' && shopNameInput ? shopNameInput.value.trim() : '';
+      try {
+        const account = await window.firebaseAPI.createAccount({
+          email, password, name, role: appName,
+          profile: { phone, address, shopName: shopName || null }
+        });
+        if (shopName) appState.shopSettings.shopName = shopName;
+        appState.auth[appName] = {
+          signedUp: true, loggedIn: false,
+          user: { uid: account.uid, email, name, phone, address, avatar: appName === 'shopkeeper' ? DEFAULT_IMAGES.avatarAdmin : DEFAULT_IMAGES.avatarCustomer }
+        };
+        authViewOverride = 'login';
+        saveState();
+        showToast('Firebase-এ অ্যাকাউন্ট তৈরি হয়েছে', 'success');
+        renderApp();
+      } catch (error) {
+        console.error(error);
+        const messages = {
+          'auth/email-already-in-use': 'এই ইমেইল দিয়ে আগে থেকেই অ্যাকাউন্ট আছে।',
+          'auth/invalid-email': 'সঠিক ইমেইল লিখুন।',
+          'auth/weak-password': 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।',
+          'auth/operation-not-allowed': 'Firebase Console থেকে Email/Password sign-in চালু করুন।'
+        };
+        showToast(messages[error.code] || error.message || 'সাইন আপ করা যায়নি।', 'error');
+      }
+    }
+
+
+
+    function renderLoginFormCard(appName) {
+      const isSignedUp = true; // Firebase accounts can log in from any device.
+      const registeredUser = appState.auth[appName].user || { email: '' };
+
+      if (!isSignedUp) {
+        return `
+          <div class="bg-[#191a20]/84 backdrop-blur-2xl rounded-[26px] p-5 text-center text-white border border-white/15 shadow-2xl space-y-3">
+            <h3 class="text-base font-bold text-white">${escapeHtml(L('Sign Up Required'))}</h3>
+            <p class="text-xs text-slate-400">
+              ${escapeHtml(L('Please complete sign up before logging in.'))}
+            </p>
+            <button
+              type="button"
+              onclick="switchAuthModeView('signup')"
+              class="w-full py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs transition"
+            >
+              ${escapeHtml(L('Go to Sign Up'))}
+            </button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="bg-[#191a20]/84 backdrop-blur-2xl rounded-[26px] p-4 sm:p-5 text-white border border-white/15 shadow-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-base font-bold text-white">${escapeHtml(L('Login'))}</h2>
+              <p class="text-[11px] text-slate-400">${escapeHtml(L('Account:'))} <span class="font-num text-amber-300">${escapeHtml(registeredUser.email || registeredUser.phone)}</span></p>
+            </div>
+            <button
+              type="button"
+              onclick="resetAuthToSignUp('${appName}')"
+              class="text-[11px] font-bold text-slate-300 hover:text-white underline"
+            >
+              ${escapeHtml(L('New Sign Up'))}
+            </button>
+          </div>
+
+          <form onsubmit="handleLoginSubmit(event, '${appName}')" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-300 mb-1">ইমেইল</label>
+              <input
+                id="login-email"
+                type="email"
+                required
+                value="${escapeAttr(registeredUser.email || '')}"
+                autocomplete="email"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-medium text-white"
+              />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-300 mb-1">${escapeHtml(L('Password'))}</label>
+              <input
+                id="login-password"
+                type="password"
+                required
+                value="${escapeAttr(registeredUser.password)}"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.07] border border-white/12 focus:border-amber-400 focus:outline-none text-xs sm:text-sm font-num text-white"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-[0.99]"
+            >
+              ${escapeHtml(L('Login'))}
+            </button>
+          </form>
+        </div>
+      `;
+    }
+
+    async function handleLoginSubmit(e, appName) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+      if (!window.firebaseReady || !window.firebaseAPI) {
+        showToast('Firebase চালু হয়নি। ইন্টারনেট ও Firebase সেটিংস পরীক্ষা করুন।', 'error');
+        return;
+      }
+      try {
+        const account = await window.firebaseAPI.login(email, password);
+        if (account.role && account.role !== appName) {
+          await window.firebaseAPI.logout();
+          showToast('এই অ্যাকাউন্টটি অন্য অ্যাপের জন্য নিবন্ধিত।', 'error');
+          return;
+        }
+        const localUser = appState.auth[appName].user || {};
+        appState.auth[appName] = {
+          ...appState.auth[appName], signedUp: true, loggedIn: true,
+          user: { ...localUser, uid: account.uid, email: account.email, name: account.name || localUser.name }
+        };
+        if (appName === 'customer') {
+          appState.customerIntroPending = true;
+          appState.activeTab.customer = 'home';
+        } else {
+          appState.activeTab.shopkeeper = 'home';
+        }
+        saveState();
+        showToast(L('Login'), 'success');
+        renderApp();
+      } catch (error) {
+        console.error(error);
+        const messages = {
+          'auth/invalid-credential': 'ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।',
+          'auth/user-not-found': 'এই ইমেইলে কোনো অ্যাকাউন্ট পাওয়া যায়নি।',
+          'auth/wrong-password': 'পাসওয়ার্ড সঠিক নয়।',
+          'auth/too-many-requests': 'অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।'
+        };
+        showToast(messages[error.code] || 'লগইন করা যায়নি: ' + (error.message || ''), 'error');
+      }
+    }
+
+    function resetAuthToSignUp(appName) {
+      appState.auth[appName].signedUp = false;
+      appState.auth[appName].loggedIn = false;
+      authViewOverride = 'signup';
+      saveState();
+      renderApp();
+    }
+
+    async function logoutApp(appName) {
+      try { if (window.firebaseAPI) await window.firebaseAPI.logout(); } catch (error) { console.warn(error); }
+      appState.auth[appName].loggedIn = false;
+      appState.menuSubView[appName] = 'main';
+      authCandlesLit = false;
+      authSmokeActive = false;
+      authViewOverride = null;
+      saveState();
+      showToast(L('Logout'), 'info');
+      renderApp();
+    }
+
+    /**
+     * =========================================================================
+     * FULL-SCREEN PORTRAIT AUTO-PLAY INTRO VIDEO (CUSTOMER)
+     * =========================================================================
+     */
+    function renderCustomerIntroVideoScreen() {
+      const shopName = L(appState.shopSettings.shopName);
+      const videoUrl = appState.shopSettings.introVideoUrl || DEFAULT_INTRO_VIDEO;
+
+      return `
+        <div class="absolute inset-0 w-full h-full bg-black text-white overflow-hidden select-none animate-view">
+          <video
+            id="customer-intro-video"
+            src="${escapeAttr(videoUrl)}"
+            autoplay
+            playsinline
+            webkit-playsinline
+            preload="auto"
+            class="absolute inset-0 w-full h-full object-cover"
+            onended="finishCustomerIntro()"
+          ></video>
+
+          <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/75 via-black/30 to-transparent"></div>
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 h-68 bg-gradient-to-t from-black/95 via-black/65 to-transparent"></div>
+
+          <div class="relative z-20 flex items-center justify-between px-4 pt-5">
+            <button
+              id="intro-sound-btn"
+              type="button"
+              onclick="toggleIntroVideoSound()"
+              class="px-3.5 py-2 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-xl border border-white/25 text-xs font-semibold flex items-center gap-1.5 text-white shadow-lg transition"
+            >
+              ${ICONS.volume}
+              <span id="intro-sound-label">${escapeHtml(L('Sound On'))}</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="finishCustomerIntro()"
+              class="px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-xl border border-white/25 text-xs font-bold text-white shadow-lg transition active:scale-95"
+            >
+              ${escapeHtml(L('Skip'))}
+            </button>
+          </div>
+
+          <div class="absolute inset-x-0 bottom-0 z-20 p-5 pb-7 flex flex-col items-center text-center">
+            <h2 class="text-2xl font-bold leading-snug text-white tracking-tight drop-shadow-md">
+              ${
+                appState.lang === 'bn'
+                  ? `স্বাগতম আমাদের ${escapeHtml(shopName)} অ্যাপস এ`
+                  : `Welcome to ${escapeHtml(shopName)}`
+              }
+            </h2>
+
+            <button
+              type="button"
+              onclick="finishCustomerIntro()"
+              class="w-full mt-4 py-3.5 rounded-2xl font-bold text-sm theme-bg theme-bg-hover shadow-2xl border border-white/20 transition transform active:scale-[0.98]"
+            >
+              ${escapeHtml(L('Enter Store'))}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function startPortraitIntroVideoAutoplay() {
+      setTimeout(() => {
+        const vid = document.getElementById('customer-intro-video');
+        const soundLabel = document.getElementById('intro-sound-label');
+        if (!vid) return;
+
+        vid.muted = false;
+        const promise = vid.play();
+        if (promise !== undefined) {
+          promise
+            .then(() => {
+              if (soundLabel) soundLabel.textContent = L('Sound On');
+            })
+            .catch(() => {
+              vid.muted = true;
+              vid.play().catch(() => {});
+              if (soundLabel) soundLabel.textContent = L('Tap for Sound');
+            });
+        }
+      }, 40);
+    }
+
+    function toggleIntroVideoSound() {
+      const vid = document.getElementById('customer-intro-video');
+      const soundLabel = document.getElementById('intro-sound-label');
+      if (!vid) return;
+      vid.muted = !vid.muted;
+      if (vid.paused) vid.play().catch(() => {});
+      if (soundLabel) {
+        soundLabel.textContent = L(vid.muted ? 'Tap for Sound' : 'Sound On');
+      }
+    }
+
+    function finishCustomerIntro() {
+      const vid = document.getElementById('customer-intro-video');
+      if (vid) {
+        try { vid.pause(); } catch {}
+      }
+      appState.customerIntroPending = false;
+      appState.activeTab.customer = 'home';
+      saveState();
+      renderApp();
+    }
+
+    /**
+     * =========================================================================
+     * FIXED SPLIT DARK GLASS PILL BOTTOM NAVIGATION
+     * =========================================================================
+     */
+    function renderSplitPillDock({ primaryTabs, actionBtn, profileTab }) {
+      return `
+        <div class="nav-dock-outer rounded-[34px] p-2 flex items-center justify-between gap-2 max-w-[404px] mx-auto">
+          <div class="nav-capsule-inner flex-1 rounded-[26px] px-2 py-1.5 grid grid-cols-3 items-center">
+            ${primaryTabs.map(tab => `
+              <button
+                type="button"
+                onclick="${tab.onClick}"
+                class="relative flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all duration-200 ${
+                  tab.active ? 'text-white scale-[1.02]' : 'text-[#9a9aa6] hover:text-slate-200'
+                }"
+              >
+                <span class="mb-0.5">
+                  ${tab.active ? tab.iconActive : tab.iconInactive}
+                </span>
+                <span class="text-[10px] leading-tight truncate w-full text-center ${
+                  tab.active ? 'font-bold text-white' : 'font-medium text-[#9a9aa6]'
+                }">
+                  ${escapeHtml(tab.label)}
+                </span>
+                ${
+                  tab.badge !== null
+                    ? `<span class="font-num absolute top-0.5 right-2.5 min-w-[16px] h-4 px-1 rounded-full theme-bg text-[9px] font-extrabold flex items-center justify-center shadow-md ring-2 ring-[#1e1e24]">${tab.badge}</span>`
+                    : ''
+                }
+              </button>
+            `).join('')}
+          </div>
+
+          <div class="nav-capsule-inner shrink-0 rounded-[26px] p-1.5 flex items-center gap-2">
+            <button
+              type="button"
+              onclick="${actionBtn.onClick}"
+              aria-label="${escapeAttr(actionBtn.label)}"
+              title="${escapeAttr(actionBtn.label)}"
+              class="relative w-11 h-11 rounded-full nav-circle-btn flex items-center justify-center transition-all duration-200 ${
+                actionBtn.active
+                  ? 'text-white ring-2 ring-white/80 scale-105'
+                  : 'text-slate-200 hover:text-white'
+              }"
+            >
+              ${actionBtn.active ? actionBtn.iconActive : actionBtn.iconInactive}
+              ${
+                actionBtn.badge !== null
+                  ? `<span class="font-num absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full theme-bg text-[10px] font-extrabold flex items-center justify-center shadow-md ring-2 ring-[#1e1e24]">${actionBtn.badge}</span>`
+                  : ''
+              }
+            </button>
+
+            <button
+              type="button"
+              onclick="${profileTab.onClick}"
+              aria-label="${escapeAttr(profileTab.label)}"
+              title="${escapeAttr(profileTab.label)}"
+              class="relative w-11 h-11 rounded-full overflow-hidden transition-all duration-200 shrink-0 ${
+                profileTab.active
+                  ? 'ring-2 ring-white scale-105 shadow-md'
+                  : 'ring-1 ring-white/25 opacity-95 hover:opacity-100'
+              }"
+            >
+              <img
+                src="${profileTab.avatar}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                alt="${escapeAttr(profileTab.label)}"
+                class="w-full h-full object-cover"
+              />
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderShopkeeperBottomNav(navEl) {
+      const current = appState.activeTab.shopkeeper;
+      const msgCount = appState.messages.length;
+      const orderCount = appState.orders.length;
+      const userAvatar = appState.auth.shopkeeper.user?.avatar || DEFAULT_IMAGES.avatarAdmin;
+
+      navEl.innerHTML = renderSplitPillDock({
+        primaryTabs: [
+          {
+            id: 'orders',
+            label: L('Orders'),
+            iconActive: ICONS.ordersFilled,
+            iconInactive: ICONS.ordersOutline,
+            active: current === 'orders',
+            badge: orderCount > 0 ? orderCount : null,
+            onClick: "setShopkeeperTab('orders')"
+          },
+          {
+            id: 'home',
+            label: L('Home'),
+            iconActive: ICONS.homeFilled,
+            iconInactive: ICONS.homeOutline,
+            active: current === 'home',
+            badge: null,
+            onClick: "setShopkeeperTab('home')"
+          },
+          {
+            id: 'menu',
+            label: L('Menu'),
+            iconActive: ICONS.menuFilled,
+            iconInactive: ICONS.menuOutline,
+            active: current === 'menu',
+            badge: null,
+            onClick: "setShopkeeperTab('menu')"
+          }
+        ],
+        actionBtn: {
+          label: L('Alerts'),
+          iconActive: ICONS.bellFilled,
+          iconInactive: ICONS.bellOutline,
+          active: current === 'messages',
+          badge: msgCount > 0 ? msgCount : null,
+          onClick: "setShopkeeperTab('messages')"
+        },
+        profileTab: {
+          label: L('Profile'),
+          avatar: userAvatar,
+          active: current === 'profile',
+          onClick: "setShopkeeperTab('profile')"
+        }
+      });
+    }
+
+    function renderCustomerBottomNav(navEl) {
+      const current = appState.activeTab.customer;
+      const orderCount = appState.orders.length;
+      const cartCount = appState.cart.length;
+      const userAvatar = appState.auth.customer.user?.avatar || DEFAULT_IMAGES.avatarCustomer;
+
+      navEl.innerHTML = renderSplitPillDock({
+        primaryTabs: [
+          {
+            id: 'orders',
+            label: L('Orders'),
+            iconActive: ICONS.ordersFilled,
+            iconInactive: ICONS.ordersOutline,
+            active: current === 'orders',
+            badge: orderCount > 0 ? orderCount : null,
+            onClick: "setCustomerTab('orders')"
+          },
+          {
+            id: 'home',
+            label: L('Home'),
+            iconActive: ICONS.homeFilled,
+            iconInactive: ICONS.homeOutline,
+            active: current === 'home',
+            badge: null,
+            onClick: "setCustomerTab('home')"
+          },
+          {
+            id: 'menu',
+            label: L('Menu'),
+            iconActive: ICONS.menuFilled,
+            iconInactive: ICONS.menuOutline,
+            active: current === 'menu',
+            badge: null,
+            onClick: "setCustomerTab('menu')"
+          }
+        ],
+        actionBtn: {
+          label: L('Cart'),
+          iconActive: ICONS.cartFilled,
+          iconInactive: ICONS.cartOutline,
+          active: current === 'cart',
+          badge: cartCount > 0 ? cartCount : null,
+          onClick: "setCustomerTab('cart')"
+        },
+        profileTab: {
+          label: L('Profile'),
+          avatar: userAvatar,
+          active: current === 'profile',
+          onClick: "setCustomerTab('profile')"
+        }
+      });
+    }
+
+    /**
+     * =========================================================================
+     * SHOPKEEPER APP SCREENS
+     * =========================================================================
+     */
+    function setShopkeeperTab(tabId) {
+      appState.activeTab.shopkeeper = tabId;
+      if (tabId === 'menu') appState.menuSubView.shopkeeper = 'main';
+      saveState();
+      renderApp();
+    }
+
+    function renderShopkeeperScreen() {
+      const tab = appState.activeTab.shopkeeper;
+      if (tab === 'messages') return renderShopkeeperMessagesScreen();
+      if (tab === 'orders') return renderShopkeeperOrdersScreen();
+      if (tab === 'profile') return renderShopkeeperProfileScreen();
+      if (tab === 'menu') return renderShopkeeperMenuScreen();
+      return renderShopkeeperHomeScreen();
+    }
+
+    function renderShopkeeperHomeScreen() {
+      const selectedCat = appState.selectedCategoryId.shopkeeper;
+      const filteredProducts = selectedCat === 'all'
+        ? appState.products
+        : appState.products.filter(p => p.categoryId === selectedCat);
+
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <div class="glass-card p-3.5 rounded-3xl flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3 min-w-0">
+              <img
+                src="${appState.shopSettings.shopLogo}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                class="w-11 h-11 rounded-2xl object-cover border border-white/80 shadow-xs shrink-0"
+                alt="Shop"
+              />
+              <div class="min-w-0">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">${escapeHtml(L('Shopkeeper App'))}</p>
+                <h2 class="text-base font-bold text-slate-900 truncate tracking-tight">
+                  ${escapeHtml(L(appState.shopSettings.shopName))}
+                </h2>
+              </div>
+            </div>
+            <button
+              type="button"
+              onclick="openCreateCategoryModal()"
+              class="px-3 py-2 rounded-xl glass-pill hover:bg-white text-slate-800 text-xs font-semibold transition flex items-center gap-1 shrink-0"
+            >
+              <span class="theme-text font-bold">+</span>
+              <span>${escapeHtml(L('Category'))}</span>
+            </button>
+          </div>
+
+          <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 mb-4">
+            <button
+              type="button"
+              onclick="selectCategoryFilter('shopkeeper', 'all')"
+              class="px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                selectedCat === 'all'
+                  ? 'theme-bg shadow-sm'
+                  : 'glass-pill text-slate-600 hover:text-slate-900'
+              }"
+            >
+              ${escapeHtml(L('All'))} <span class="font-num opacity-80">(${appState.products.length})</span>
+            </button>
+            ${appState.categories.map(cat => {
+              const isActive = selectedCat === cat.id;
+              const count = appState.products.filter(p => p.categoryId === cat.id).length;
+              return `
+                <button
+                  type="button"
+                  onclick="selectCategoryFilter('shopkeeper', '${cat.id}')"
+                  class="px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                    isActive
+                      ? 'theme-bg shadow-sm'
+                      : 'glass-pill text-slate-600 hover:text-slate-900'
+                  }"
+                >
+                  <span>${escapeHtml(L(cat.name))}</span>
+                  <span class="font-num opacity-75">(${count})</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          ${
+            filteredProducts.length === 0
+              ? `<div class="text-center py-14 glass-card rounded-3xl px-4">
+                  <p class="text-sm font-semibold text-slate-700">${escapeHtml(L('No products in this category'))}</p>
+                  <button type="button" onclick="openAddProductModal()" class="mt-3 px-4 py-2 rounded-xl text-xs font-bold theme-bg">
+                    + ${escapeHtml(L('Add Product'))}
+                  </button>
+                </div>`
+              : `<div class="grid grid-cols-2 gap-3">
+                  ${filteredProducts.map(prod => renderShopkeeperProductCard(prod)).join('')}
+                </div>`
+          }
+        </div>
+      `;
+    }
+
+    function renderShopkeeperProductCard(prod) {
+      const cat = appState.categories.find(c => c.id === prod.categoryId);
+      const isCake = cat?.isDefaultCake || prod.unitType === 'pound';
+      const coverImg = (prod.images && prod.images[0]) || DEFAULT_IMAGES.placeholder;
+
+      return `
+        <div
+          onclick="openEditProductModal('${prod.id}')"
+          class="glass-card rounded-2xl overflow-hidden hover:bg-white/85 transition cursor-pointer flex flex-col justify-between group"
+        >
+          <div>
+            <div class="relative aspect-[4/3] bg-slate-100/70 overflow-hidden">
+              <img
+                src="${coverImg}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                alt="${escapeAttr(L(prod.name))}"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-slate-950/65 backdrop-blur-md text-white text-[10px] font-medium border border-white/15">
+                ${escapeHtml(L(cat?.name || ''))}
+              </span>
+              ${
+                prod.images && prod.images.length > 1
+                  ? `<span class="font-num absolute bottom-2 right-2 px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-md text-slate-800 text-[10px] font-semibold flex items-center gap-1 shadow-2xs">
+                      ${ICONS.camera} ${prod.images.length}
+                    </span>`
+                  : ''
+              }
+            </div>
+
+            <div class="p-3 pb-2">
+              <h3 class="text-[13px] font-bold text-slate-900 line-clamp-1 leading-snug">
+                ${escapeHtml(L(prod.name))}
+              </h3>
+              <p class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                ${escapeHtml(L(prod.description || ''))}
+              </p>
+            </div>
+          </div>
+
+          <div class="px-3 pb-3 pt-2 border-t border-slate-900/[0.06] flex items-end justify-between gap-1">
+            <div>
+              <div class="font-num text-xs font-extrabold theme-text">
+                ${formatCurrency(prod.price)}<span class="text-[10px] font-medium text-slate-400"> / ${escapeHtml(formatUnitLabel(prod.unitType))}</span>
+              </div>
+              <div class="text-[10px] text-slate-500 font-medium mt-0.5">
+                ${
+                  isCake
+                    ? escapeHtml(L('Custom per pound'))
+                    : `${escapeHtml(L('Stock:'))} <span class="font-num font-bold text-slate-700">${prod.stock}</span> ${escapeHtml(formatUnitLabel(prod.unitType))}`
+                }
+              </div>
+            </div>
+            <span class="w-7 h-7 rounded-lg bg-white/75 border border-white/80 group-hover:bg-white text-slate-700 flex items-center justify-center transition">
+              ${ICONS.edit}
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectCategoryFilter(role, catId) {
+      appState.selectedCategoryId[role] = catId;
+      saveState();
+      renderApp();
+    }
+
+    function openCreateCategoryModal() {
+      openModal(`
+        <div class="p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">${escapeHtml(L('New Category'))}</h3>
+            <button type="button" onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-900/[0.06] text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm font-bold">✕</button>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">
+            ${escapeHtml(L('"Cake" is the default category. Create additional categories below.'))}
+          </p>
+          <form onsubmit="handleCreateCategory(event)" class="space-y-4">
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Category Name'))}</label>
+              <input
+                id="new-category-name"
+                type="text"
+                required
+                placeholder="${escapeAttr(L('e.g. Pastries or Beverages'))}"
+                class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium"
+              />
+            </div>
+            <div class="flex gap-2 justify-end pt-1">
+              <button type="button" onclick="closeModal()" class="px-4 py-2.5 rounded-xl bg-white/80 text-slate-700 text-xs font-semibold border border-slate-200/80">
+                ${escapeHtml(L('Cancel'))}
+              </button>
+              <button type="submit" class="px-5 py-2.5 rounded-xl theme-bg text-xs font-bold shadow-sm">
+                ${escapeHtml(L('Create'))}
+              </button>
+            </div>
+          </form>
+        </div>
+      `);
+    }
+
+    function handleCreateCategory(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-category-name').value.trim();
+      if (!name) return;
+
+      const exists = appState.categories.some(c => c.name.toLowerCase() === name.toLowerCase());
+      if (exists) {
+        showToast(L('Category Name'), 'error');
+        return;
+      }
+
+      const lower = name.toLowerCase();
+      appState.categories.push({
+        id: 'cat-' + Date.now(),
+        name,
+        isDefaultCake: lower === 'cake' || name === 'কেক'
+      });
+      saveState();
+      closeModal();
+      renderApp();
+      showToast(L('Create'), 'success');
+    }
+
+    function openAddProductModal() {
+      const cakeCat = appState.categories.find(c => isCakeCategoryObj(c)) || appState.categories[0];
+      renderProductFormModal({
+        mode: 'add',
+        product: {
+          id: null,
+          categoryId: cakeCat ? cakeCat.id : 'cat-cake',
+          name: '',
+          description: '',
+          images: [DEFAULT_IMAGES.cake1],
+          unitType: 'pound',
+          price: 950,
+          stock: 15
+        }
+      });
+    }
+
+    function openEditProductModal(productId) {
+      const prod = appState.products.find(p => p.id === productId);
+      if (!prod) return;
+      renderProductFormModal({
+        mode: 'edit',
+        product: JSON.parse(JSON.stringify(prod))
+      });
+    }
+
+    let modalTempImages = [];
+
+    function renderProductFormModal({ mode, product }) {
+      modalTempImages = Array.isArray(product.images) ? [...product.images] : [];
+      const catObj = appState.categories.find(c => c.id === product.categoryId);
+      const isCakeCat = isCakeCategoryObj(catObj);
+
+      openModal(`
+        <div class="p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-slate-900">
+              ${escapeHtml(L(mode === 'add' ? 'Add Product' : 'Edit Product'))}
+            </h3>
+            <button type="button" onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-900/[0.06] text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm font-bold">✕</button>
+          </div>
+
+          <form onsubmit="handleSaveProduct(event, '${mode}', '${product.id || ''}')" class="space-y-3.5">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-[11px] font-semibold uppercase tracking-wider text-slate-600">${escapeHtml(L('Category'))}</label>
+                <button
+                  type="button"
+                  onclick="closeModal(); openCreateCategoryModal();"
+                  class="text-[11px] font-bold theme-text hover:underline"
+                >
+                  ${escapeHtml(L('+ New Category'))}
+                </button>
+              </div>
+              <select
+                id="prod-category"
+                onchange="onProductModalCategoryChange()"
+                class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium"
+              >
+                ${appState.categories.map(cat => `
+                  <option value="${cat.id}" ${cat.id === product.categoryId ? 'selected' : ''}>
+                    ${escapeHtml(L(cat.name))} ${cat.isDefaultCake ? escapeHtml(L('(Default Cake)')) : ''}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1.5">${escapeHtml(L('Photos'))}</label>
+              <div id="modal-images-preview" class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                ${renderModalImagesList()}
+              </div>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <label class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-semibold cursor-pointer transition flex items-center gap-1.5">
+                  ${ICONS.camera}
+                  <span>${escapeHtml(L('Upload'))}</span>
+                  <input type="file" accept="image/*" multiple onchange="handleProductImageUpload(event)" class="hidden" />
+                </label>
+                <button
+                  type="button"
+                  onclick="addPresetImage('${DEFAULT_IMAGES.cake3}')"
+                  class="px-2.5 py-1.5 rounded-xl bg-white/80 hover:bg-white text-slate-700 text-[11px] font-semibold border border-slate-200/80"
+                >
+                  ${escapeHtml(L('+ Cake Photo'))}
+                </button>
+                <button
+                  type="button"
+                  onclick="addPresetImage('${DEFAULT_IMAGES.cookie1}')"
+                  class="px-2.5 py-1.5 rounded-xl bg-white/80 hover:bg-white text-slate-700 text-[11px] font-semibold border border-slate-200/80"
+                >
+                  ${escapeHtml(L('+ Cookie Photo'))}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Product Name'))}</label>
+              <input
+                id="prod-name"
+                type="text"
+                required
+                value="${escapeAttr(L(product.name))}"
+                placeholder="${escapeAttr(L('Enter product name'))}"
+                class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium"
+              />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Description'))}</label>
+              <textarea
+                id="prod-desc"
+                rows="2"
+                required
+                placeholder="${escapeAttr(L('Product details'))}"
+                class="w-full px-3.5 py-2 rounded-xl glass-input text-sm"
+              >${escapeHtml(L(product.description))}</textarea>
+            </div>
+
+            <div id="prod-pricing-stock-box" class="p-3.5 rounded-2xl bg-white/60 border border-white/80 space-y-3">
+              ${renderPricingStockFields(isCakeCat, product.unitType, product.price, product.stock)}
+            </div>
+
+            <div class="flex items-center justify-between gap-2 pt-2">
+              ${
+                mode === 'edit'
+                  ? `<button
+                      type="button"
+                      onclick="handleDeleteProduct('${product.id}')"
+                      class="px-3.5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 text-xs font-bold transition flex items-center gap-1"
+                    >
+                      ${ICONS.trash}
+                      <span>${escapeHtml(L('Delete'))}</span>
+                    </button>`
+                  : '<div></div>'
+              }
+
+              <div class="flex gap-2">
+                <button type="button" onclick="closeModal()" class="px-4 py-2.5 rounded-xl bg-white/80 text-slate-700 text-xs font-semibold border border-slate-200/80">
+                  ${escapeHtml(L('Cancel'))}
+                </button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl theme-bg theme-bg-hover text-xs font-bold shadow-sm">
+                  ${escapeHtml(L('Save'))}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      `);
+    }
+
+    function renderPricingStockFields(isCakeCat, unitType, price, stock) {
+      if (isCakeCat) {
+        return `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold theme-text flex items-center gap-1.5">
+              ${ICONS.cake}
+              <span>${escapeHtml(L('Cake — Price Per Pound'))}</span>
+            </span>
+            <input type="hidden" id="prod-unit-type" value="pound" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Price per Pound (৳)'))}</label>
+            <input
+              id="prod-price"
+              type="number"
+              min="1"
+              step="any"
+              required
+              value="${price || 950}"
+              class="w-full px-3.5 py-2 rounded-xl glass-input text-sm font-num font-bold"
+            />
+          </div>
+          <input id="prod-stock" type="hidden" value="0" />
+        `;
+      }
+
+      const validUnit = (unitType === 'gram' || unitType === 'piece') ? unitType : 'piece';
+      return `
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Unit Type'))}</label>
+          <select
+            id="prod-unit-type"
+            class="w-full px-3 py-2 rounded-xl glass-input text-sm font-semibold"
+          >
+            <option value="piece" ${validUnit === 'piece' ? 'selected' : ''}>${escapeHtml(L('Piece'))}</option>
+            <option value="gram" ${validUnit === 'gram' ? 'selected' : ''}>${escapeHtml(L('Gram'))}</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Price (৳)'))}</label>
+            <input
+              id="prod-price"
+              type="number"
+              min="0.1"
+              step="any"
+              required
+              value="${price || 50}"
+              class="w-full px-3 py-2 rounded-xl glass-input text-sm font-num font-bold"
+            />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Stock'))}</label>
+            <input
+              id="prod-stock"
+              type="number"
+              min="0"
+              step="1"
+              required
+              value="${stock ?? 10}"
+              class="w-full px-3 py-2 rounded-xl glass-input text-sm font-num font-bold"
+            />
+          </div>
+        </div>
+      `;
+    }
+
+    function onProductModalCategoryChange() {
+      const catId = document.getElementById('prod-category').value;
+      const catObj = appState.categories.find(c => c.id === catId);
+      const isCake = isCakeCategoryObj(catObj);
+      const currentPrice = document.getElementById('prod-price')?.value || (isCake ? 950 : 50);
+      const currentStock = document.getElementById('prod-stock')?.value || 10;
+      const currentUnit = document.getElementById('prod-unit-type')?.value || 'piece';
+
+      document.getElementById('prod-pricing-stock-box').innerHTML = renderPricingStockFields(
+        isCake,
+        isCake ? 'pound' : currentUnit,
+        currentPrice,
+        currentStock
+      );
+    }
+
+    function renderModalImagesList() {
+      if (!modalTempImages.length) {
+        return `<div class="text-xs text-slate-400 py-2">${escapeHtml(L('No photos selected'))}</div>`;
+      }
+      return modalTempImages.map((imgSrc, idx) => `
+        <div class="relative w-16 h-16 shrink-0 rounded-xl overflow-hidden border border-white/80">
+          <img src="${imgSrc}" onerror="this.src='${DEFAULT_IMAGES.placeholder}'" class="w-full h-full object-cover" />
+          <button
+            type="button"
+            onclick="removeModalImage(${idx})"
+            class="absolute top-1 right-1 w-5 h-5 rounded-full bg-slate-950/75 text-white text-[10px] font-bold flex items-center justify-center"
+          >
+            ✕
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function removeModalImage(index) {
+      modalTempImages.splice(index, 1);
+      document.getElementById('modal-images-preview').innerHTML = renderModalImagesList();
+    }
+
+    function addPresetImage(url) {
+      modalTempImages.push(url);
+      document.getElementById('modal-images-preview').innerHTML = renderModalImagesList();
+    }
+
+    function handleProductImageUpload(e) {
+      const files = Array.from(e.target.files || []);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (typeof reader.result === 'string') {
+            modalTempImages.push(reader.result);
+            const container = document.getElementById('modal-images-preview');
+            if (container) container.innerHTML = renderModalImagesList();
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function handleSaveProduct(e, mode, existingId) {
+      e.preventDefault();
+      const categoryId = document.getElementById('prod-category').value;
+      const catObj = appState.categories.find(c => c.id === categoryId);
+      const isCake = isCakeCategoryObj(catObj);
+
+      const name = document.getElementById('prod-name').value.trim();
+      const description = document.getElementById('prod-desc').value.trim();
+      const unitType = isCake ? 'pound' : document.getElementById('prod-unit-type').value;
+      const price = parseFloat(document.getElementById('prod-price').value);
+      const stock = isCake ? 0 : parseInt(document.getElementById('prod-stock').value || '0', 10);
+
+      if (!name || isNaN(price) || price <= 0) {
+        showToast(L('Product Name'), 'error');
+        return;
+      }
+
+      const finalImages = modalTempImages.length > 0 ? [...modalTempImages] : [DEFAULT_IMAGES.placeholder];
+
+      if (mode === 'add') {
+        appState.products.unshift({
+          id: 'prod-' + Date.now(),
+          categoryId,
+          name,
+          description,
+          images: finalImages,
+          unitType,
+          price,
+          stock
+        });
+        showToast(L('Add Product'), 'success');
+      } else {
+        const idx = appState.products.findIndex(p => p.id === existingId);
+        if (idx !== -1) {
+          appState.products[idx] = {
+            ...appState.products[idx],
+            categoryId,
+            name,
+            description,
+            images: finalImages,
+            unitType,
+            price,
+            stock
+          };
+          showToast(L('Edit Product'), 'success');
+        }
+      }
+
+      saveState();
+      closeModal();
+      renderApp();
+    }
+
+    function handleDeleteProduct(productId) {
+      appState.products = appState.products.filter(p => p.id !== productId);
+      appState.cart = appState.cart.filter(c => c.productId !== productId);
+      saveState();
+      closeModal();
+      renderApp();
+      showToast(L('Delete'), 'info');
+    }
+
+    function renderShopkeeperMessagesScreen() {
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHtml(L('Order Alerts'))}</h2>
+              <p class="text-xs text-slate-500">${escapeHtml(L('Alerts appear only when a customer places an order'))}</p>
+            </div>
+            ${
+              appState.messages.length > 0
+                ? `<button type="button" onclick="clearShopkeeperMessages()" class="text-xs font-semibold text-slate-500 hover:text-rose-600">
+                    ${escapeHtml(L('Clear All'))}
+                  </button>`
+                : ''
+            }
+          </div>
+
+          ${
+            appState.messages.length === 0
+              ? `<div class="text-center py-14 glass-card rounded-3xl px-5">
+                  <div class="w-12 h-12 rounded-2xl bg-white/75 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                    ${ICONS.bellOutline}
+                  </div>
+                  <p class="text-sm font-bold text-slate-700">${escapeHtml(L('No order alerts yet'))}</p>
+                  <p class="text-xs text-slate-500 mt-1">${escapeHtml(L('New orders from Customer App will notify you here.'))}</p>
+                </div>`
+              : `<div class="space-y-3">
+                  ${appState.messages.map(msg => `
+                    <div class="glass-card p-4 rounded-2xl">
+                      <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="font-num px-2.5 py-0.5 rounded-full text-[11px] font-bold theme-soft">
+                          #${escapeHtml(msg.orderId)}
+                        </span>
+                        <span class="font-num text-[11px] text-slate-400">
+                          ${formatDateTime(msg.createdAt)}
+                        </span>
+                      </div>
+                      <p class="text-xs sm:text-[13px] font-semibold text-slate-800 leading-relaxed">
+                        ${escapeHtml(formatAlertMessage(msg))}
+                      </p>
+                      <div class="mt-3 pt-2.5 border-t border-slate-900/[0.06] flex justify-end">
+                        <button
+                          type="button"
+                          onclick="setShopkeeperTab('orders')"
+                          class="px-3.5 py-1.5 rounded-xl text-xs font-bold theme-bg theme-bg-hover transition"
+                        >
+                          ${escapeHtml(L('View Orders'))}
+                        </button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>`
+          }
+        </div>
+      `;
+    }
+
+    function formatAlertMessage(msg) {
+      const cust = L(msg.customerName);
+      const area = L(msg.deliveryArea);
+      const amt = formatCurrency(msg.totalAmount);
+      if (appState.lang === 'bn') {
+        return `নতুন অর্ডার #${msg.orderId} — ${cust} (${area}), সর্বমোট ${amt}।`;
+      }
+      return `New Order #${msg.orderId} from ${cust} (${area}) — Total ${amt}.`;
+    }
+
+    function clearShopkeeperMessages() {
+      appState.messages = [];
+      saveState();
+      renderApp();
+      showToast(L('Clear All'), 'info');
+    }
+
+    function renderShopkeeperOrdersScreen() {
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHtml(L('Active Orders'))}</h2>
+              <p class="text-xs text-slate-500">${escapeHtml(L('Ordered item photos are shown below; completed orders move to Trust'))}</p>
+            </div>
+            <button
+              type="button"
+              onclick="openShopkeeperTrustFromOrders()"
+              class="px-3 py-1.5 rounded-full glass-pill text-slate-800 text-xs font-semibold flex items-center gap-1.5"
+            >
+              <span class="theme-text">${ICONS.shield}</span>
+              <span>${escapeHtml(L('Trust'))} (<span class="font-num">${appState.trustOrders.length}</span>)</span>
+            </button>
+          </div>
+
+          ${
+            appState.orders.length === 0
+              ? `<div class="text-center py-14 glass-card rounded-3xl px-5">
+                  <div class="w-12 h-12 rounded-2xl bg-white/75 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                    ${ICONS.ordersOutline}
+                  </div>
+                  <p class="text-sm font-bold text-slate-700">${escapeHtml(L('No active orders'))}</p>
+                  <p class="text-xs text-slate-500 mt-1">${escapeHtml(L('Completed orders are stored in Menu → Trust.'))}</p>
+                </div>`
+              : `<div class="space-y-3.5">
+                  ${appState.orders.map(order => renderOrderCard(order, 'shopkeeper')).join('')}
+                </div>`
+          }
+        </div>
+      `;
+    }
+
+    function openShopkeeperTrustFromOrders() {
+      appState.activeTab.shopkeeper = 'menu';
+      appState.menuSubView.shopkeeper = 'trust';
+      saveState();
+      renderApp();
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+      const idx = appState.orders.findIndex(o => o.id === orderId);
+      if (idx === -1) return;
+      appState.orders[idx].status = newStatus;
+      saveState();
+      renderApp();
+      showToast(L('Orders'), 'success');
+    }
+
+    function completeDeliveryToTrust(orderId) {
+      const idx = appState.orders.findIndex(o => o.id === orderId);
+      if (idx === -1) return;
+
+      const [completedOrder] = appState.orders.splice(idx, 1);
+      completedOrder.status = 'completed';
+      completedOrder.completedAt = new Date().toISOString();
+
+      appState.trustOrders.unshift(completedOrder);
+      saveState();
+      renderApp();
+      showToast(`${L('Orders')}: #${orderId} → ${L('Trust')}`, 'success');
+    }
+
+    function renderShopkeeperProfileScreen() {
+      const user = appState.auth.shopkeeper.user || {};
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-4">${escapeHtml(L('Shopkeeper Profile'))}</h2>
+
+          <div class="glass-card rounded-3xl p-4 mb-4 flex items-center gap-3.5">
+            <img
+              src="${user.avatar || DEFAULT_IMAGES.avatarAdmin}"
+              onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+              class="w-16 h-16 rounded-2xl object-cover border border-white/80"
+              alt="Shopkeeper"
+            />
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-bold text-slate-900 truncate">${escapeHtml(user.name || '')}</h3>
+              <p class="text-xs text-slate-600 truncate">${escapeHtml(L(appState.shopSettings.shopName))}</p>
+              <p class="font-num text-xs text-slate-400 mt-0.5">${escapeHtml(user.phone || '')}</p>
+            </div>
+            <label class="px-3 py-2 rounded-xl glass-pill hover:bg-white text-slate-800 text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition">
+              ${ICONS.camera}
+              <span>${escapeHtml(L('Photo'))}</span>
+              <input type="file" accept="image/*" onchange="handleProfileAvatarChange(event, 'shopkeeper')" class="hidden" />
+            </label>
+          </div>
+
+          <form onsubmit="handleUpdateProfile(event, 'shopkeeper')" class="glass-card rounded-3xl p-4 space-y-3.5">
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Name'))}</label>
+              <input id="prof-name" type="text" required value="${escapeAttr(user.name || '')}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Phone'))}</label>
+              <input id="prof-phone" type="tel" required value="${escapeAttr(user.phone || '')}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-num font-medium" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Address'))}</label>
+              <input id="prof-address" type="text" required value="${escapeAttr(user.address || '')}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium" />
+            </div>
+            <button type="submit" class="w-full py-3 rounded-xl font-bold text-xs sm:text-sm theme-bg theme-bg-hover shadow-sm">
+              ${escapeHtml(L('Save Profile'))}
+            </button>
+          </form>
+
+          <button
+            type="button"
+            onclick="logoutApp('shopkeeper')"
+            class="w-full mt-3.5 py-3 rounded-2xl glass-pill hover:bg-white text-slate-700 text-xs font-bold transition flex items-center justify-center gap-2"
+          >
+            ${ICONS.logout}
+            <span>${escapeHtml(L('Logout'))}</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function handleProfileAvatarChange(e, appName) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string' && appState.auth[appName].user) {
+          appState.auth[appName].user.avatar = reader.result;
+          saveState();
+          renderApp();
+          showToast(L('Photo'), 'success');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleUpdateProfile(e, appName) {
+      e.preventDefault();
+      if (!appState.auth[appName].user) return;
+      appState.auth[appName].user.name = document.getElementById('prof-name').value.trim();
+      appState.auth[appName].user.phone = document.getElementById('prof-phone').value.trim();
+      appState.auth[appName].user.address = document.getElementById('prof-address').value.trim();
+      saveState();
+      renderApp();
+      showToast(L('Save Profile'), 'success');
+    }
+
+    function renderShopkeeperMenuScreen() {
+      const subView = appState.menuSubView.shopkeeper;
+
+      if (subView === 'trust') {
+        return renderTrustOrdersList({
+          title: L('Trust — Completed Orders'),
+          subtitle: L('Completed deliveries archived here'),
+          onBack: () => {
+            appState.menuSubView.shopkeeper = 'main';
+            saveState();
+            renderApp();
+          }
+        });
+      }
+
+      if (subView === 'settings') {
+        return renderShopkeeperSettingsScreen();
+      }
+
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-4">${escapeHtml(L('Menu'))}</h2>
+
+          <div class="space-y-3">
+            <button
+              type="button"
+              onclick="setMenuSubView('shopkeeper', 'trust')"
+              class="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/85 transition text-left"
+            >
+              <div class="flex items-center gap-3.5">
+                <span class="w-11 h-11 rounded-2xl theme-soft flex items-center justify-center">${ICONS.shield}</span>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">${escapeHtml(L('Trust'))}</h3>
+                  <p class="text-xs text-slate-500">
+                    ${escapeHtml(L('Completed orders'))} (<span class="font-num font-semibold">${appState.trustOrders.length}</span>)
+                  </p>
+                </div>
+              </div>
+              <span class="text-slate-400">${ICONS.chevronRight}</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="setMenuSubView('shopkeeper', 'settings')"
+              class="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/85 transition text-left"
+            >
+              <div class="flex items-center gap-3.5">
+                <span class="w-11 h-11 rounded-2xl theme-soft flex items-center justify-center">${ICONS.settings}</span>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">${escapeHtml(L('Settings'))}</h3>
+                  <p class="text-xs text-slate-500">
+                    ${escapeHtml(L('Store info, theme, intro video, WhatsApp & delivery zones'))}
+                  </p>
+                </div>
+              </div>
+              <span class="text-slate-400">${ICONS.chevronRight}</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function setMenuSubView(appName, view) {
+      appState.menuSubView[appName] = view;
+      saveState();
+      renderApp();
+    }
+
+    let tempDeliveryAreas = [];
+
+    function renderShopkeeperSettingsScreen() {
+      const s = appState.shopSettings;
+      tempDeliveryAreas = JSON.parse(JSON.stringify(s.deliveryAreas || []));
+      const swatches = ['#0f766e', '#1e293b', '#7c2d12', '#4338ca', '#9f1239', '#0369a1'];
+
+      return `
+        <div class="p-4 sm:p-5 animate-view space-y-4">
+          <div class="flex items-center justify-between">
+            <button
+              type="button"
+              onclick="setMenuSubView('shopkeeper', 'main')"
+              class="text-xs font-bold theme-text flex items-center gap-1"
+            >
+              ${ICONS.arrowLeft}
+              <span>${escapeHtml(L('Menu'))}</span>
+            </button>
+            <h2 class="text-base font-bold text-slate-900">${escapeHtml(L('Store Settings'))}</h2>
+          </div>
+
+          <form onsubmit="handleSaveShopSettings(event)" class="space-y-4">
+            <div class="glass-card p-4 rounded-3xl space-y-2.5">
+              <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                ${appState.lang === 'bn' ? 'ভাষা (Language)' : 'Language'}
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onclick="setAppLanguage('en')"
+                  class="py-2.5 rounded-xl text-xs font-bold border transition ${
+                    appState.lang === 'en' ? 'theme-bg border-transparent shadow-2xs' : 'bg-white/70 text-slate-700 border-white/80'
+                  }"
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onclick="setAppLanguage('bn')"
+                  class="py-2.5 rounded-xl text-xs font-bold border transition ${
+                    appState.lang === 'bn' ? 'theme-bg border-transparent shadow-2xs' : 'bg-white/70 text-slate-700 border-white/80'
+                  }"
+                >
+                  বাংলা
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-3xl space-y-3">
+              <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-400">${escapeHtml(L('Brand & Info'))}</h3>
+
+              <div class="flex items-center gap-3.5">
+                <img
+                  id="settings-logo-preview"
+                  src="${s.shopLogo}"
+                  onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                  class="w-14 h-14 rounded-2xl object-cover border border-white/80"
+                  alt="Logo"
+                />
+                <label class="px-3.5 py-2 rounded-xl glass-pill hover:bg-white text-slate-800 text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition">
+                  ${ICONS.camera}
+                  <span>${escapeHtml(L('Change Logo'))}</span>
+                  <input type="file" accept="image/*" onchange="handleSettingsLogoUpload(event)" class="hidden" />
+                </label>
+              </div>
+              <input id="set-shop-logo-url" type="hidden" value="${escapeAttr(s.shopLogo)}" />
+
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Shop Name'))}</label>
+                <input id="set-shop-name" type="text" required value="${escapeAttr(L(s.shopName))}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium" />
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Shop Address'))}</label>
+                <input id="set-shop-address" type="text" required value="${escapeAttr(L(s.shopAddress))}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium" />
+              </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-3xl space-y-3">
+              <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-400">${escapeHtml(L('Theme Color'))}</h3>
+              <div class="flex items-center gap-2 flex-wrap">
+                ${swatches.map(hex => `
+                  <button
+                    type="button"
+                    onclick="document.getElementById('set-theme-color').value='${hex}'; document.getElementById('set-theme-hex-label').textContent='${hex}';"
+                    style="background-color: ${hex}"
+                    class="w-8 h-8 rounded-full border-2 border-white shadow-sm transition transform hover:scale-105"
+                  ></button>
+                `).join('')}
+                <div class="ml-auto flex items-center gap-2">
+                  <span id="set-theme-hex-label" class="text-[11px] font-num text-slate-500">${s.themeColor}</span>
+                  <input
+                    id="set-theme-color"
+                    type="color"
+                    value="${s.themeColor}"
+                    oninput="document.getElementById('set-theme-hex-label').textContent=this.value"
+                    class="w-9 h-8 rounded-lg border border-white/80 cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-3xl space-y-3">
+              <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-400">${escapeHtml(L('Customer Intro Video'))}</h3>
+              <input
+                id="set-intro-video-url"
+                type="text"
+                value="${escapeAttr(s.introVideoUrl)}"
+                class="w-full px-3.5 py-2 rounded-xl glass-input text-xs font-num"
+                placeholder="https://..."
+              />
+              <div class="flex items-center gap-2">
+                <label class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition">
+                  ${ICONS.play}
+                  <span>${escapeHtml(L('Upload Video'))}</span>
+                  <input type="file" accept="video/*" onchange="handleIntroVideoFileUpload(event)" class="hidden" />
+                </label>
+                <button
+                  type="button"
+                  onclick="document.getElementById('set-intro-video-url').value = '${DEFAULT_INTRO_VIDEO}'"
+                  class="px-3 py-1.5 rounded-xl glass-pill hover:bg-white text-slate-700 text-xs font-semibold"
+                >
+                  ${escapeHtml(L('Default Video'))}
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-3xl space-y-3">
+              <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-400">${escapeHtml(L('WhatsApp & Facebook'))}</h3>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('WhatsApp Number'))}</label>
+                <input
+                  id="set-whatsapp"
+                  type="text"
+                  required
+                  value="${escapeAttr(s.whatsappNumber)}"
+                  placeholder="8801711000000"
+                  class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-num font-medium"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(L('Facebook Page URL'))}</label>
+                <input
+                  id="set-facebook"
+                  type="url"
+                  value="${escapeAttr(s.facebookLink)}"
+                  placeholder="https://facebook.com/..."
+                  class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-num"
+                />
+              </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-3xl space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-400">${escapeHtml(L('Delivery Zones'))}</h3>
+                <button
+                  type="button"
+                  onclick="addDeliveryAreaRow()"
+                  class="px-3 py-1 rounded-full theme-soft text-xs font-bold"
+                >
+                  ${escapeHtml(L('+ Add Zone'))}
+                </button>
+              </div>
+              <div id="delivery-areas-list" class="space-y-2">
+                ${renderDeliveryAreasRows()}
+              </div>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 rounded-2xl font-bold text-sm theme-bg theme-bg-hover shadow-sm">
+              ${escapeHtml(L('Save Settings'))}
+            </button>
+          </form>
+        </div>
+      `;
+    }
+
+    function renderDeliveryAreasRows() {
+      if (!tempDeliveryAreas.length) {
+        return `<p class="text-xs text-slate-400">${escapeHtml(L('No delivery zones configured'))}</p>`;
+      }
+      return tempDeliveryAreas.map((area, index) => `
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            value="${escapeAttr(L(area.name))}"
+            onchange="tempDeliveryAreas[${index}].name = this.value"
+            placeholder="${escapeAttr(L('Area name'))}"
+            class="flex-1 px-3 py-2 rounded-xl glass-input text-xs font-medium"
+          />
+          <input
+            type="number"
+            min="0"
+            value="${area.charge}"
+            onchange="tempDeliveryAreas[${index}].charge = parseFloat(this.value) || 0"
+            placeholder="${escapeAttr(L('Fee'))}"
+            class="w-24 px-3 py-2 rounded-xl glass-input text-xs font-num font-bold"
+          />
+          <button
+            type="button"
+            onclick="removeDeliveryAreaRow(${index})"
+            class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-600 text-xs font-bold flex items-center justify-center"
+          >
+            ✕
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function addDeliveryAreaRow() {
+      tempDeliveryAreas.push({ id: 'area-' + Date.now(), name: '', charge: 80 });
+      document.getElementById('delivery-areas-list').innerHTML = renderDeliveryAreasRows();
+    }
+
+    function removeDeliveryAreaRow(index) {
+      tempDeliveryAreas.splice(index, 1);
+      document.getElementById('delivery-areas-list').innerHTML = renderDeliveryAreasRows();
+    }
+
+    function handleSettingsLogoUpload(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          document.getElementById('set-shop-logo-url').value = reader.result;
+          document.getElementById('settings-logo-preview').src = reader.result;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleIntroVideoFileUpload(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const blobUrl = URL.createObjectURL(file);
+      document.getElementById('set-intro-video-url').value = blobUrl;
+      showToast(L('Upload Video'), 'success');
+    }
+
+    function handleSaveShopSettings(e) {
+      e.preventDefault();
+      const cleanedAreas = tempDeliveryAreas
+        .map(a => ({
+          id: a.id || ('area-' + Date.now() + Math.random()),
+          name: (a.name || '').trim(),
+          charge: Number(a.charge || 0)
+        }))
+        .filter(a => a.name.length > 0);
+
+      appState.shopSettings = {
+        ...appState.shopSettings,
+        shopLogo: document.getElementById('set-shop-logo-url').value.trim() || DEFAULT_IMAGES.logo,
+        shopName: document.getElementById('set-shop-name').value.trim(),
+        shopAddress: document.getElementById('set-shop-address').value.trim(),
+        themeColor: document.getElementById('set-theme-color').value,
+        introVideoUrl: document.getElementById('set-intro-video-url').value.trim() || DEFAULT_INTRO_VIDEO,
+        whatsappNumber: document.getElementById('set-whatsapp').value.trim().replace(/[^\d]/g, ''),
+        facebookLink: document.getElementById('set-facebook').value.trim(),
+        deliveryAreas: cleanedAreas
+      };
+
+      saveState();
+      applyThemeColor();
+      showToast(L('Save Settings'), 'success');
+      renderApp();
+    }
+
+    /**
+     * =========================================================================
+     * CUSTOMER APP SCREENS
+     * =========================================================================
+     */
+    function setCustomerTab(tabId) {
+      appState.activeTab.customer = tabId;
+      if (tabId === 'menu') appState.menuSubView.customer = 'main';
+      saveState();
+      renderApp();
+    }
+
+    function renderCustomerScreen() {
+      const tab = appState.activeTab.customer;
+      if (tab === 'profile') return renderCustomerProfileScreen();
+      if (tab === 'orders') return renderCustomerOrdersScreen();
+      if (tab === 'cart') return renderCustomerCartCheckoutScreen();
+      if (tab === 'menu') return renderCustomerMenuScreen();
+      return renderCustomerHomeScreen();
+    }
+
+    function renderCustomerHomeScreen() {
+      const selectedCat = appState.selectedCategoryId.customer;
+      const filteredProducts = selectedCat === 'all'
+        ? appState.products
+        : appState.products.filter(p => p.categoryId === selectedCat);
+
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <div class="glass-card p-3.5 rounded-3xl mb-4 flex items-center justify-between gap-2.5">
+            <div class="flex items-center gap-3 min-w-0">
+              <img
+                src="${appState.shopSettings.shopLogo}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                class="w-11 h-11 rounded-2xl object-cover border border-white/80 shrink-0"
+                alt="Shop"
+              />
+              <div class="min-w-0">
+                <h2 class="text-sm sm:text-[15px] font-bold text-slate-900 truncate tracking-tight">
+                  ${escapeHtml(L(appState.shopSettings.shopName))}
+                </h2>
+                <p class="text-[11px] text-slate-500 truncate flex items-center gap-1 mt-0.5">
+                  <span class="shrink-0">${ICONS.pin}</span>
+                  <span class="truncate">${escapeHtml(L(appState.shopSettings.shopAddress))}</span>
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onclick="replayCustomerIntroVideo()"
+              class="px-3 py-1.5 rounded-full glass-pill hover:bg-white text-slate-700 text-[11px] font-semibold shrink-0 flex items-center gap-1 transition"
+            >
+              ${ICONS.play}
+              <span>${escapeHtml(L('Intro'))}</span>
+            </button>
+          </div>
+
+          <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 mb-4">
+            <button
+              type="button"
+              onclick="selectCategoryFilter('customer', 'all')"
+              class="px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                selectedCat === 'all'
+                  ? 'theme-bg shadow-sm'
+                  : 'glass-pill text-slate-600 hover:text-slate-900'
+              }"
+            >
+              ${escapeHtml(L('All'))}
+            </button>
+            ${appState.categories.map(cat => {
+              const active = selectedCat === cat.id;
+              return `
+                <button
+                  type="button"
+                  onclick="selectCategoryFilter('customer', '${cat.id}')"
+                  class="px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                    active
+                      ? 'theme-bg shadow-sm'
+                      : 'glass-pill text-slate-600 hover:text-slate-900'
+                  }"
+                >
+                  ${escapeHtml(L(cat.name))}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          ${
+            filteredProducts.length === 0
+              ? `<div class="text-center py-14 glass-card rounded-3xl">
+                  <p class="text-sm font-semibold text-slate-600">${escapeHtml(L('No products found'))}</p>
+                </div>`
+              : `<div class="grid grid-cols-2 gap-3">
+                  ${filteredProducts.map(prod => renderCustomerProductCard(prod)).join('')}
+                </div>`
+          }
+        </div>
+      `;
+    }
+
+    function replayCustomerIntroVideo() {
+      appState.customerIntroPending = true;
+      saveState();
+      renderApp();
+    }
+
+    function renderCustomerProductCard(prod) {
+      const cat = appState.categories.find(c => c.id === prod.categoryId);
+      const isCake = isCakeCategoryObj(cat) || prod.unitType === 'pound';
+      const coverImg = (prod.images && prod.images[0]) || DEFAULT_IMAGES.placeholder;
+      const outOfStock = !isCake && prod.stock <= 0;
+
+      return `
+        <div class="glass-card rounded-2xl overflow-hidden hover:bg-white/85 transition flex flex-col justify-between group">
+          <div onclick="openCustomerProductModal('${prod.id}')" class="cursor-pointer">
+            <div class="relative aspect-[4/3] bg-slate-100/70 overflow-hidden">
+              <img
+                src="${coverImg}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                alt="${escapeAttr(L(prod.name))}"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-slate-950/65 backdrop-blur-md text-white text-[10px] font-medium border border-white/15">
+                ${escapeHtml(L(cat?.name || ''))}
+              </span>
+            </div>
+
+            <div class="p-3 pb-2">
+              <h3 class="text-[13px] font-bold text-slate-900 line-clamp-1 leading-snug">
+                ${escapeHtml(L(prod.name))}
+              </h3>
+              <p class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                ${escapeHtml(L(prod.description || ''))}
+              </p>
+              <div class="mt-2 font-num text-xs font-extrabold theme-text">
+                ${formatCurrency(prod.price)}<span class="text-[10px] text-slate-400 font-normal"> / ${escapeHtml(formatUnitLabel(prod.unitType))}</span>
+              </div>
+              <p class="text-[10px] mt-0.5 ${outOfStock ? 'text-rose-600 font-bold' : 'text-slate-500'}">
+                ${
+                  isCake
+                    ? escapeHtml(L('Custom pound & note'))
+                    : outOfStock
+                      ? escapeHtml(L('Out of stock'))
+                      : `${escapeHtml(L('Stock:'))} <span class="font-num font-semibold">${prod.stock}</span> ${escapeHtml(formatUnitLabel(prod.unitType))}`
+                }
+              </p>
+            </div>
+          </div>
+
+          <div class="px-3 pb-3 pt-1 flex gap-1.5">
+            <button
+              type="button"
+              onclick="openCustomerProductModal('${prod.id}')"
+              class="flex-1 py-1.5 rounded-xl bg-white/80 hover:bg-white text-slate-800 text-[11px] font-semibold border border-white/80 transition"
+            >
+              ${escapeHtml(L('Details'))}
+            </button>
+            <button
+              type="button"
+              ${outOfStock ? 'disabled' : ''}
+              onclick="quickAddToCart('${prod.id}')"
+              class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition ${
+                outOfStock
+                  ? 'bg-slate-200/80 text-slate-400 cursor-not-allowed'
+                  : 'theme-bg theme-bg-hover shadow-2xs'
+              }"
+            >
+              + ${escapeHtml(L('Cart'))}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    let activeGalleryIdx = 0;
+
+    function openCustomerProductModal(productId) {
+      const prod = appState.products.find(p => p.id === productId);
+      if (!prod) return;
+      activeGalleryIdx = 0;
+      renderCustomerProductModalContent(prod);
+    }
+
+    function renderCustomerProductModalContent(prod) {
+      const cat = appState.categories.find(c => c.id === prod.categoryId);
+      const isCake = isCakeCategoryObj(cat) || prod.unitType === 'pound';
+      const photos = (prod.images && prod.images.length > 0) ? prod.images : [DEFAULT_IMAGES.placeholder];
+      const currentPhoto = photos[activeGalleryIdx] || photos[0];
+      const whatsappUrl = buildWhatsAppProductUrl(prod, L(cat?.name || ''));
+      const outOfStock = !isCake && prod.stock <= 0;
+
+      openModal(`
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold theme-soft">
+              ${escapeHtml(L(cat?.name || ''))}
+            </span>
+            <button type="button" onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-900/[0.06] text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm font-bold">✕</button>
+          </div>
+
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100/70 border border-white/80 mb-2.5">
+            <img
+              src="${currentPhoto}"
+              onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+              alt="${escapeAttr(L(prod.name))}"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          ${
+            photos.length > 1
+              ? `<div class="flex gap-2 overflow-x-auto no-scrollbar mb-3">
+                  ${photos.map((pUrl, i) => `
+                    <button
+                      type="button"
+                      onclick="switchProductGalleryPhoto('${prod.id}', ${i})"
+                      class="w-14 h-14 rounded-xl overflow-hidden border-2 shrink-0 transition ${
+                        i === activeGalleryIdx ? 'theme-border' : 'border-transparent opacity-60 hover:opacity-100'
+                      }"
+                    >
+                      <img src="${pUrl}" onerror="this.src='${DEFAULT_IMAGES.placeholder}'" class="w-full h-full object-cover" />
+                    </button>
+                  `).join('')}
+                </div>`
+              : ''
+          }
+
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">${escapeHtml(L(prod.name))}</h3>
+            <span class="font-num text-base font-extrabold theme-text shrink-0">
+              ${formatCurrency(prod.price)}<span class="text-xs text-slate-400 font-normal"> / ${escapeHtml(formatUnitLabel(prod.unitType))}</span>
+            </span>
+          </div>
+
+          <p class="text-xs font-semibold mt-1.5 ${outOfStock ? 'text-rose-600' : 'text-emerald-700'}">
+            ${
+              isCake
+                ? escapeHtml(L('Choose pounds & custom inscription at checkout'))
+                : outOfStock
+                  ? escapeHtml(L('Currently out of stock'))
+                  : `${escapeHtml(L('Available Stock:'))} <span class="font-num">${prod.stock}</span> ${escapeHtml(formatUnitLabel(prod.unitType))}`
+            }
+          </p>
+
+          <p class="text-xs sm:text-[13px] text-slate-600 mt-3 leading-relaxed">
+            ${escapeHtml(L(prod.description || ''))}
+          </p>
+
+          <div class="mt-5 flex flex-col sm:flex-row gap-2.5">
+            <a
+              href="${whatsappUrl}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
+            >
+              ${ICONS.whatsapp}
+              <span>${escapeHtml(L('About (WhatsApp)'))}</span>
+            </a>
+
+            <button
+              type="button"
+              ${outOfStock ? 'disabled' : ''}
+              onclick="addFromDetailsModal('${prod.id}')"
+              class="flex-1 py-3 px-4 rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition ${
+                outOfStock
+                  ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  : 'theme-bg theme-bg-hover'
+              }"
+            >
+              ${ICONS.cart}
+              <span>${escapeHtml(L('Add to Cart'))}</span>
+            </button>
+          </div>
+        </div>
+      `);
+    }
+
+    function switchProductGalleryPhoto(productId, index) {
+      activeGalleryIdx = index;
+      const prod = appState.products.find(p => p.id === productId);
+      if (prod) renderCustomerProductModalContent(prod);
+    }
+
+    function buildWhatsAppProductUrl(product, categoryName) {
+      const cleanNumber = (appState.shopSettings.whatsappNumber || '8801711000000').replace(/[^\d]/g, '');
+      const photoLink = (product.images && product.images[0]) ? product.images[0] : '';
+      const pName = L(product.name);
+      const pDesc = L(product.description || '');
+      const text = appState.lang === 'bn'
+        ? [
+            `আসসালামু আলাইকুম, আমি এই পণ্যটি সম্পর্কে জানতে চাই:`,
+            `• পণ্য: ${pName}`,
+            `• ক্যাটাগরি: ${categoryName}`,
+            `• মূল্য: ${product.price} টাকা (${formatUnitLabel(product.unitType)})`,
+            `• বিবরণ: ${pDesc}`,
+            photoLink ? `• ছবির লিংক: ${photoLink}` : ''
+          ].filter(Boolean).join('\n')
+        : [
+            `Hello, I would like to know more about this product:`,
+            `• Product: ${pName}`,
+            `• Category: ${categoryName}`,
+            `• Price: ${product.price} BDT (${formatUnitLabel(product.unitType)})`,
+            `• Details: ${pDesc}`,
+            photoLink ? `• Photo Link: ${photoLink}` : ''
+          ].filter(Boolean).join('\n');
+
+      return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`;
+    }
+
+    function quickAddToCart(productId) {
+      const res = addProductToCartWithStockCheck(productId, 1);
+      if (res.ok) {
+        showToast(L('Add to Cart'), 'success');
+        renderApp();
+      } else {
+        showToast(res.error, 'error');
+      }
+    }
+
+    function addFromDetailsModal(productId) {
+      const res = addProductToCartWithStockCheck(productId, 1);
+      if (res.ok) {
+        closeModal();
+        showToast(L('Add to Cart'), 'success');
+        renderApp();
+      } else {
+        showToast(res.error, 'error');
+      }
+    }
+
+    function addProductToCartWithStockCheck(productId, deltaQty) {
+      const prod = appState.products.find(p => p.id === productId);
+      if (!prod) return { ok: false, error: L('No products found') };
+
+      const cat = appState.categories.find(c => c.id === prod.categoryId);
+      const isCake = isCakeCategoryObj(cat) || prod.unitType === 'pound';
+
+      const existing = appState.cart.find(item => item.productId === productId);
+      const currentQty = existing ? Number(existing.quantity || 0) : 0;
+      const nextQty = currentQty + Number(deltaQty);
+
+      if (nextQty <= 0) {
+        appState.cart = appState.cart.filter(item => item.productId !== productId);
+        saveState();
+        return { ok: true };
+      }
+
+      if (!isCake && nextQty > Number(prod.stock || 0)) {
+        return {
+          ok: false,
+          error: `${escapeHtml(L('Available Stock:'))} ${prod.stock} ${formatUnitLabel(prod.unitType)}`
+        };
+      }
+
+      if (existing) {
+        existing.quantity = nextQty;
+      } else {
+        appState.cart.push({ productId, quantity: nextQty });
+      }
+
+      saveState();
+      return { ok: true };
+    }
+
+    function renderCustomerCartCheckoutScreen() {
+      const custUser = appState.auth.customer.user || {};
+      const areas = appState.shopSettings.deliveryAreas || [];
+
+      if (appState.cart.length === 0) {
+        return `
+          <div class="p-5 animate-view text-center py-16">
+            <div class="w-14 h-14 rounded-2xl glass-card text-slate-400 flex items-center justify-center mx-auto mb-3">
+              ${ICONS.cartOutline}
+            </div>
+            <h2 class="text-base font-bold text-slate-800">${escapeHtml(L('Your Cart is Empty'))}</h2>
+            <p class="text-xs text-slate-500 mt-1 mb-5">${escapeHtml(L('Add cakes or products from Home to checkout.'))}</p>
+            <button
+              type="button"
+              onclick="setCustomerTab('home')"
+              class="px-5 py-2.5 rounded-xl text-xs font-bold theme-bg shadow-sm"
+            >
+              ${escapeHtml(L('Browse Products'))}
+            </button>
+          </div>
+        `;
+      }
+
+      let hasCakeInCart = false;
+      let subtotal = 0;
+
+      const cartRowsHtml = appState.cart.map(cartItem => {
+        const prod = appState.products.find(p => p.id === cartItem.productId);
+        if (!prod) return '';
+        const cat = appState.categories.find(c => c.id === prod.categoryId);
+        const isCake = isCakeCategoryObj(cat) || prod.unitType === 'pound';
+        if (isCake) hasCakeInCart = true;
+
+        const lineTotal = Number(prod.price) * Number(cartItem.quantity);
+        subtotal += lineTotal;
+
+        return `
+          <div class="glass-card p-3.5 rounded-2xl">
+            <div class="flex gap-3">
+              <img
+                src="${(prod.images && prod.images[0]) || DEFAULT_IMAGES.placeholder}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                class="w-16 h-16 rounded-xl object-cover border border-white/80 shrink-0"
+                alt="${escapeAttr(L(prod.name))}"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2">
+                  <h4 class="text-xs sm:text-[13px] font-bold text-slate-900 truncate">${escapeHtml(L(prod.name))}</h4>
+                  <button
+                    type="button"
+                    onclick="removeCartItem('${prod.id}')"
+                    class="text-xs text-slate-400 hover:text-rose-600 font-bold"
+                  >✕</button>
+                </div>
+                <p class="font-num text-[11px] text-slate-500 mt-0.5">
+                  ${formatCurrency(prod.price)} / ${escapeHtml(formatUnitLabel(prod.unitType))}
+                  ${!isCake ? ` • ${escapeHtml(L('Stock:'))} ${prod.stock}` : ''}
+                </p>
+
+                <div class="mt-2.5 flex items-center justify-between">
+                  <div class="flex items-center gap-1 bg-white/80 border border-white/80 p-0.5 rounded-xl">
+                    <button
+                      type="button"
+                      onclick="adjustCartItemQty('${prod.id}', -1)"
+                      class="w-7 h-7 rounded-lg bg-white text-slate-700 hover:bg-slate-50 font-bold text-xs shadow-2xs"
+                    >−</button>
+                    <span class="px-2.5 font-num text-xs font-bold text-slate-800">
+                      ${cartItem.quantity} ${escapeHtml(formatUnitLabel(prod.unitType))}
+                    </span>
+                    <button
+                      type="button"
+                      onclick="adjustCartItemQty('${prod.id}', 1)"
+                      class="w-7 h-7 rounded-lg bg-white text-slate-700 hover:bg-slate-50 font-bold text-xs shadow-2xs"
+                    >+</button>
+                  </div>
+                  <span class="font-num text-xs sm:text-sm font-extrabold theme-text">${formatCurrency(lineTotal)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const initialAreaCharge = areas.length > 0 ? Number(areas[0].charge || 0) : 0;
+
+      return `
+        <div class="p-4 sm:p-5 animate-view space-y-4">
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHtml(L('Cart & Checkout'))}</h2>
+
+          <div class="space-y-2.5">
+            ${cartRowsHtml}
+          </div>
+
+          <form onsubmit="handlePlaceCustomerOrder(event)" class="glass-card p-4 sm:p-5 rounded-3xl space-y-3.5">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 border-b border-slate-900/[0.06] pb-2">
+              ${escapeHtml(L('Order & Delivery Details'))}
+            </h3>
+
+            ${
+              hasCakeInCart
+                ? `<div class="p-3.5 rounded-2xl theme-soft border theme-soft-border space-y-2.5">
+                    <div class="text-xs font-bold flex items-center gap-1.5">
+                      ${ICONS.cake}
+                      <span>${escapeHtml(L('Cake Weight & Inscription'))}</span>
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-semibold text-slate-700 mb-1">${escapeHtml(L('Cake Pounds'))}</label>
+                      <input
+                        id="checkout-cake-pound"
+                        type="number"
+                        min="0.5"
+                        step="0.5"
+                        required
+                        value="${getFirstCakeCartQty()}"
+                        onchange="syncCakePoundWithSubtotal()"
+                        class="w-full px-3 py-2 rounded-xl glass-input text-sm font-num font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-semibold text-slate-700 mb-1">${escapeHtml(L('Text to Write on Cake'))}</label>
+                      <input
+                        id="checkout-cake-text"
+                        type="text"
+                        required
+                        placeholder="${escapeAttr(L('e.g. Happy Birthday!'))}"
+                        class="w-full px-3 py-2 rounded-xl glass-input text-sm text-slate-900"
+                      />
+                    </div>
+                  </div>`
+                : ''
+            }
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Delivery Area'))}</label>
+              <select
+                id="checkout-delivery-area"
+                onchange="recalculateCheckoutTotal()"
+                class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium"
+              >
+                ${
+                  areas.length > 0
+                    ? areas.map(a => `
+                        <option value="${escapeAttr(a.name)}" data-charge="${Number(a.charge || 0)}">
+                          ${escapeHtml(L(a.name))} — ${formatCurrency(a.charge)}
+                        </option>
+                      `).join('')
+                    : `<option value="${escapeAttr(appState.shopSettings.shopAddress)}" data-charge="0">
+                        ${escapeHtml(L(appState.shopSettings.shopAddress))} — ${formatCurrency(0)}
+                      </option>`
+                }
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Full Name'))}</label>
+              <input
+                id="checkout-name"
+                type="text"
+                required
+                value="${escapeAttr(custUser.name || '')}"
+                class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium"
+              />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Phone Number'))}</label>
+              <input
+                id="checkout-phone"
+                type="tel"
+                required
+                value="${escapeAttr(custUser.phone || '')}"
+                class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-num font-medium"
+              />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Delivery Address'))}</label>
+              <textarea
+                id="checkout-address"
+                rows="2"
+                required
+                class="w-full px-3.5 py-2 rounded-xl glass-input text-sm"
+              >${escapeHtml(custUser.address || '')}</textarea>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/65 border border-white/80 space-y-1.5 text-xs">
+              <div class="flex justify-between text-slate-500">
+                <span>${escapeHtml(L('Subtotal'))}</span>
+                <span id="checkout-subtotal" data-value="${subtotal}" class="font-num font-bold text-slate-800">${formatCurrency(subtotal)}</span>
+              </div>
+              <div class="flex justify-between text-slate-500">
+                <span>${escapeHtml(L('Delivery Fee'))}</span>
+                <span id="checkout-delivery-charge" class="font-num font-bold text-slate-800">${formatCurrency(initialAreaCharge)}</span>
+              </div>
+              <div class="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-900/[0.08]">
+                <span>${escapeHtml(L('Total'))}</span>
+                <span id="checkout-grand-total" class="font-num font-extrabold theme-text">${formatCurrency(subtotal + initialAreaCharge)}</span>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3.5 rounded-2xl font-bold text-sm theme-bg theme-bg-hover shadow-sm transition"
+            >
+              ${escapeHtml(L('Place Order'))}
+            </button>
+          </form>
+        </div>
+      `;
+    }
+
+    function getFirstCakeCartQty() {
+      for (const item of appState.cart) {
+        const prod = appState.products.find(p => p.id === item.productId);
+        const cat = prod ? appState.categories.find(c => c.id === prod.categoryId) : null;
+        if (prod && (isCakeCategoryObj(cat) || prod.unitType === 'pound')) {
+          return Number(item.quantity || 1);
+        }
+      }
+      return 1;
+    }
+
+    function syncCakePoundWithSubtotal() {
+      const poundInput = document.getElementById('checkout-cake-pound');
+      if (!poundInput) return;
+      const newPound = parseFloat(poundInput.value);
+      if (isNaN(newPound) || newPound <= 0) return;
+
+      for (const item of appState.cart) {
+        const prod = appState.products.find(p => p.id === item.productId);
+        const cat = prod ? appState.categories.find(c => c.id === prod.categoryId) : null;
+        if (prod && (isCakeCategoryObj(cat) || prod.unitType === 'pound')) {
+          item.quantity = newPound;
+          break;
+        }
+      }
+
+      let recalculatedSubtotal = 0;
+      for (const item of appState.cart) {
+        const prod = appState.products.find(p => p.id === item.productId);
+        if (prod) recalculatedSubtotal += Number(prod.price) * Number(item.quantity);
+      }
+
+      const subEl = document.getElementById('checkout-subtotal');
+      if (subEl) {
+        subEl.dataset.value = String(recalculatedSubtotal);
+        subEl.textContent = formatCurrency(recalculatedSubtotal);
+      }
+      recalculateCheckoutTotal();
+    }
+
+    function recalculateCheckoutTotal() {
+      const subEl = document.getElementById('checkout-subtotal');
+      const selectEl = document.getElementById('checkout-delivery-area');
+      const chargeEl = document.getElementById('checkout-delivery-charge');
+      const totalEl = document.getElementById('checkout-grand-total');
+
+      if (!subEl || !selectEl || !chargeEl || !totalEl) return;
+      const subtotal = parseFloat(subEl.dataset.value || '0') || 0;
+      const selectedOption = selectEl.options[selectEl.selectedIndex];
+      const charge = parseFloat(selectedOption?.getAttribute('data-charge') || '0') || 0;
+
+      chargeEl.textContent = formatCurrency(charge);
+      totalEl.textContent = formatCurrency(subtotal + charge);
+    }
+
+    function adjustCartItemQty(productId, delta) {
+      const res = addProductToCartWithStockCheck(productId, delta);
+      if (!res.ok) {
+        showToast(res.error, 'error');
+        return;
+      }
+      renderApp();
+    }
+
+    function removeCartItem(productId) {
+      appState.cart = appState.cart.filter(item => item.productId !== productId);
+      saveState();
+      renderApp();
+    }
+
+    function handlePlaceCustomerOrder(e) {
+      e.preventDefault();
+      if (appState.cart.length === 0) {
+        showToast(L('Your Cart is Empty'), 'error');
+        return;
+      }
+
+      const selectEl = document.getElementById('checkout-delivery-area');
+      const selectedOption = selectEl.options[selectEl.selectedIndex];
+      const deliveryArea = selectEl.value;
+      const deliveryCharge = parseFloat(selectedOption?.getAttribute('data-charge') || '0') || 0;
+
+      const customerName = document.getElementById('checkout-name').value.trim();
+      const customerPhone = document.getElementById('checkout-phone').value.trim();
+      const deliveryAddress = document.getElementById('checkout-address').value.trim();
+
+      const cakePoundEl = document.getElementById('checkout-cake-pound');
+      const cakeTextEl = document.getElementById('checkout-cake-text');
+      const cakePounds = cakePoundEl ? parseFloat(cakePoundEl.value) : null;
+      const cakeText = cakeTextEl ? cakeTextEl.value.trim() : '';
+
+      let subtotal = 0;
+      const orderItems = [];
+
+      for (const cItem of appState.cart) {
+        const prod = appState.products.find(p => p.id === cItem.productId);
+        if (!prod) continue;
+        const cat = appState.categories.find(c => c.id === prod.categoryId);
+        const isCake = Boolean(isCakeCategoryObj(cat) || prod.unitType === 'pound');
+
+        if (!isCake && Number(cItem.quantity) > Number(prod.stock || 0)) {
+          showToast(`${escapeHtml(L('Available Stock:'))} ${prod.stock}`, 'error');
+          return;
+        }
+
+        const qty = isCake && cakePounds ? cakePounds : Number(cItem.quantity);
+        const lineTotal = Number(prod.price) * qty;
+        subtotal += lineTotal;
+
+        const imgs = Array.isArray(prod.images) && prod.images.length > 0 ? [...prod.images] : [DEFAULT_IMAGES.placeholder];
+
+        orderItems.push({
+          productId: prod.id,
+          name: prod.name,
+          image: imgs[0],
+          images: imgs,
+          isCake,
+          unitType: prod.unitType,
+          unitPrice: Number(prod.price),
+          quantity: qty,
+          cakePounds: isCake ? qty : null,
+          cakeText: isCake ? cakeText : null,
+          lineTotal
+        });
+      }
+
+      for (const oItem of orderItems) {
+        if (!oItem.isCake) {
+          const pIdx = appState.products.findIndex(p => p.id === oItem.productId);
+          if (pIdx !== -1) {
+            appState.products[pIdx].stock = Math.max(0, Number(appState.products[pIdx].stock || 0) - Number(oItem.quantity));
+          }
+        }
+      }
+
+      const orderId = 'ORD-' + Math.floor(2000 + Math.random() * 7999);
+      const totalAmount = subtotal + deliveryCharge;
+
+      appState.orders.unshift({
+        id: orderId,
+        createdAt: new Date().toISOString(),
+        status: 'pending',
+        customerName,
+        customerPhone,
+        deliveryArea,
+        deliveryAddress,
+        deliveryCharge,
+        items: orderItems,
+        subtotal,
+        totalAmount
+      });
+
+      appState.messages.unshift({
+        id: 'MSG-' + Date.now(),
+        orderId,
+        customerName,
+        deliveryArea,
+        totalAmount,
+        createdAt: new Date().toISOString(),
+        text: `New Order #${orderId} from ${customerName} (${deliveryArea}) — Total ${formatCurrency(totalAmount)}.`
+      });
+
+      appState.cart = [];
+      appState.activeTab.customer = 'orders';
+      saveState();
+      renderApp();
+      showToast(`#${orderId} — ${L('Place Order')}`, 'success');
+    }
+
+    function renderCustomerOrdersScreen() {
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHtml(L('My Orders'))}</h2>
+            <p class="text-xs text-slate-500">${escapeHtml(L('Completed orders automatically move to Menu → Trust'))}</p>
+          </div>
+
+          ${
+            appState.orders.length === 0
+              ? `<div class="text-center py-14 glass-card rounded-3xl px-5">
+                  <div class="w-12 h-12 rounded-2xl bg-white/75 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                    ${ICONS.ordersOutline}
+                  </div>
+                  <p class="text-sm font-bold text-slate-700">${escapeHtml(L('No active orders'))}</p>
+                  <p class="text-xs text-slate-500 mt-1">${escapeHtml(L('View delivered orders in Menu → Trust.'))}</p>
+                </div>`
+              : `<div class="space-y-3.5">
+                  ${appState.orders.map(order => renderOrderCard(order, 'customer')).join('')}
+                </div>`
+          }
+        </div>
+      `;
+    }
+
+    function renderCustomerProfileScreen() {
+      const user = appState.auth.customer.user || {};
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-4">${escapeHtml(L('Customer Profile'))}</h2>
+
+          <div class="glass-card rounded-3xl p-4 mb-4 flex items-center gap-3.5">
+            <img
+              src="${user.avatar || DEFAULT_IMAGES.avatarCustomer}"
+              onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+              class="w-16 h-16 rounded-2xl object-cover border border-white/80"
+              alt="Customer"
+            />
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-bold text-slate-900 truncate">${escapeHtml(user.name || '')}</h3>
+              <p class="font-num text-xs text-slate-500">${escapeHtml(user.phone || '')}</p>
+              <p class="text-xs text-slate-600 truncate mt-0.5">${escapeHtml(L(user.address || ''))}</p>
+            </div>
+            <label class="px-3 py-2 rounded-xl glass-pill hover:bg-white text-slate-800 text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition">
+              ${ICONS.camera}
+              <span>${escapeHtml(L('Photo'))}</span>
+              <input type="file" accept="image/*" onchange="handleProfileAvatarChange(event, 'customer')" class="hidden" />
+            </label>
+          </div>
+
+          <form onsubmit="handleUpdateProfile(event, 'customer')" class="glass-card rounded-3xl p-4 space-y-3.5">
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Full Name'))}</label>
+              <input id="prof-name" type="text" required value="${escapeAttr(user.name || '')}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Phone'))}</label>
+              <input id="prof-phone" type="tel" required value="${escapeAttr(user.phone || '')}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-num font-medium" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">${escapeHtml(L('Address'))}</label>
+              <input id="prof-address" type="text" required value="${escapeAttr(L(user.address || ''))}" class="w-full px-3.5 py-2.5 rounded-xl glass-input text-sm font-medium" />
+            </div>
+            <button type="submit" class="w-full py-3 rounded-xl font-bold text-xs sm:text-sm theme-bg theme-bg-hover shadow-sm">
+              ${escapeHtml(L('Update Profile'))}
+            </button>
+          </form>
+
+          <button
+            type="button"
+            onclick="logoutApp('customer')"
+            class="w-full mt-3.5 py-3 rounded-2xl glass-pill hover:bg-white text-slate-700 text-xs font-bold transition flex items-center justify-center gap-2"
+          >
+            ${ICONS.logout}
+            <span>${escapeHtml(L('Logout'))}</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderCustomerMenuScreen() {
+      const subView = appState.menuSubView.customer;
+
+      if (subView === 'about') return renderCustomerShopAboutScreen();
+      if (subView === 'settings') return renderCustomerSettingsScreen();
+      if (subView === 'trust') {
+        return renderTrustOrdersList({
+          title: L('Trust — Completed Orders'),
+          subtitle: L('Delivered orders appear here automatically'),
+          onBack: () => {
+            appState.menuSubView.customer = 'main';
+            saveState();
+            renderApp();
+          }
+        });
+      }
+
+      return `
+        <div class="p-4 sm:p-5 animate-view">
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-4">${escapeHtml(L('Menu'))}</h2>
+
+          <div class="space-y-3">
+            <button
+              type="button"
+              onclick="setMenuSubView('customer', 'about')"
+              class="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/85 transition text-left"
+            >
+              <div class="flex items-center gap-3.5">
+                <span class="w-11 h-11 rounded-2xl theme-soft flex items-center justify-center">${ICONS.store}</span>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">${escapeHtml(L('About'))}</h3>
+                  <p class="text-xs text-slate-500">${escapeHtml(L('Store info, address & social links'))}</p>
+                </div>
+              </div>
+              <span class="text-slate-400">${ICONS.chevronRight}</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="setMenuSubView('customer', 'settings')"
+              class="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/85 transition text-left"
+            >
+              <div class="flex items-center gap-3.5">
+                <span class="w-11 h-11 rounded-2xl theme-soft flex items-center justify-center">${ICONS.settings}</span>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">${escapeHtml(L('Settings'))}</h3>
+                  <p class="text-xs text-slate-500">${escapeHtml(L('Customize your theme color'))}</p>
+                </div>
+              </div>
+              <span class="text-slate-400">${ICONS.chevronRight}</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="setMenuSubView('customer', 'trust')"
+              class="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/85 transition text-left"
+            >
+              <div class="flex items-center gap-3.5">
+                <span class="w-11 h-11 rounded-2xl theme-soft flex items-center justify-center">${ICONS.shield}</span>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">${escapeHtml(L('Trust'))}</h3>
+                  <p class="text-xs text-slate-500">
+                    ${escapeHtml(L('Completed orders'))} (<span class="font-num font-semibold">${appState.trustOrders.length}</span>)
+                  </p>
+                </div>
+              </div>
+              <span class="text-slate-400">${ICONS.chevronRight}</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCustomerShopAboutScreen() {
+      const s = appState.shopSettings;
+      const waClean = (s.whatsappNumber || '').replace(/[^\d]/g, '');
+
+      return `
+        <div class="p-4 sm:p-5 animate-view space-y-4">
+          <button
+            type="button"
+            onclick="setMenuSubView('customer', 'main')"
+            class="text-xs font-bold theme-text flex items-center gap-1"
+          >
+            ${ICONS.arrowLeft}
+            <span>${escapeHtml(L('Menu'))}</span>
+          </button>
+
+          <div class="glass-card p-6 rounded-3xl text-center">
+            <img
+              src="${s.shopLogo}"
+              onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+              class="w-20 h-20 rounded-2xl object-cover mx-auto mb-3.5 border border-white/80 shadow-sm"
+              alt="Shop Logo"
+            />
+            <h2 class="text-lg font-bold text-slate-900">${escapeHtml(L(s.shopName))}</h2>
+            <p class="text-xs text-slate-500 mt-1 flex items-center justify-center gap-1">
+              ${ICONS.pin}
+              <span>${escapeHtml(L(s.shopAddress))}</span>
+            </p>
+          </div>
+
+          <div class="glass-card p-4 rounded-3xl space-y-3 text-xs">
+            <div class="flex items-center justify-between py-2 border-b border-slate-900/[0.06]">
+              <span class="text-slate-500 font-semibold">${escapeHtml(L('WhatsApp'))}</span>
+              <span class="font-num font-bold text-slate-800">+${escapeHtml(waClean)}</span>
+            </div>
+
+            <div class="pt-1 flex flex-col gap-2.5">
+              <a
+                href="https://wa.me/${waClean}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold flex items-center justify-center gap-2 transition"
+              >
+                ${ICONS.whatsapp}
+                <span>${escapeHtml(L('Chat on WhatsApp'))}</span>
+              </a>
+
+              ${
+                s.facebookLink
+                  ? `<a
+                      href="${escapeAttr(s.facebookLink)}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-center transition"
+                    >
+                      ${escapeHtml(L('Visit Facebook Page'))}
+                    </a>`
+                  : ''
+              }
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCustomerSettingsScreen() {
+      const swatches = ['#0f766e', '#1e293b', '#7c2d12', '#4338ca', '#9f1239', '#0369a1'];
+
+      return `
+        <div class="p-4 sm:p-5 animate-view space-y-4">
+          <button
+            type="button"
+            onclick="setMenuSubView('customer', 'main')"
+            class="text-xs font-bold theme-text flex items-center gap-1"
+          >
+            ${ICONS.arrowLeft}
+            <span>${escapeHtml(L('Menu'))}</span>
+          </button>
+
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHtml(L('Settings'))}</h2>
+
+          <div class="glass-card p-4 rounded-3xl space-y-2.5">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500">
+              ${appState.lang === 'bn' ? 'ভাষা (Language)' : 'Language'}
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onclick="setAppLanguage('en')"
+                class="py-2.5 rounded-xl text-xs font-bold border transition ${
+                  appState.lang === 'en' ? 'theme-bg border-transparent shadow-2xs' : 'bg-white/70 text-slate-700 border-white/80'
+                }"
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onclick="setAppLanguage('bn')"
+                class="py-2.5 rounded-xl text-xs font-bold border transition ${
+                  appState.lang === 'bn' ? 'theme-bg border-transparent shadow-2xs' : 'bg-white/70 text-slate-700 border-white/80'
+                }"
+              >
+                বাংলা
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-card p-4 rounded-3xl space-y-3">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500">
+              ${escapeHtml(L('Theme Color'))}
+            </label>
+
+            <div class="flex items-center gap-2.5 flex-wrap">
+              ${swatches.map(hex => `
+                <button
+                  type="button"
+                  onclick="setCustomThemeColor('${hex}')"
+                  style="background-color: ${hex}"
+                  class="w-9 h-9 rounded-full border-2 ${
+                    appState.shopSettings.themeColor.toLowerCase() === hex ? 'border-slate-900 scale-110' : 'border-white shadow-sm'
+                  } transition"
+                ></button>
+              `).join('')}
+
+              <input
+                type="color"
+                value="${appState.shopSettings.themeColor}"
+                onchange="setCustomThemeColor(this.value)"
+                class="w-10 h-9 rounded-xl border border-white/80 cursor-pointer ml-auto"
+              />
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setCustomThemeColor(hex) {
+      appState.shopSettings.themeColor = hex;
+      saveState();
+      applyThemeColor();
+      renderApp();
+      showToast(L('Theme Color'), 'success');
+    }
+
+    /**
+     * =========================================================================
+     * ORDER CARD WITH ORDERED PRODUCT PICTURES & TRUST ARCHIVE
+     * =========================================================================
+     */
+    function resolveOrderItemPhoto(item) {
+      if (item.image) return item.image;
+      if (Array.isArray(item.images) && item.images.length > 0) return item.images[0];
+      const liveProd = appState.products.find(p => p.id === item.productId);
+      if (liveProd && Array.isArray(liveProd.images) && liveProd.images.length > 0) {
+        return liveProd.images[0];
+      }
+      return DEFAULT_IMAGES.placeholder;
+    }
+
+    function previewOrderPhoto(photoUrl, titleText) {
+      openModal(`
+        <div class="p-4 sm:p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900 truncate">${escapeHtml(titleText || L('Photos'))}</h3>
+            <button type="button" onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-900/[0.06] text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm font-bold">✕</button>
+          </div>
+          <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 border border-white/80">
+            <img
+              src="${photoUrl}"
+              onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+              alt="${escapeAttr(titleText || '')}"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      `);
+    }
+
+    function renderOrderCard(order, viewerRole) {
+      const itemsHtml = (order.items || []).map(item => {
+        const photoUrl = resolveOrderItemPhoto(item);
+        const itemTitle = L(item.name);
+
+        return `
+          <div class="p-3 rounded-2xl bg-white/75 border border-white/80 text-xs flex items-start gap-3">
+            <button
+              type="button"
+              onclick="previewOrderPhoto('${escapeAttr(photoUrl)}', '${escapeAttr(itemTitle)}')"
+              class="w-[60px] h-[60px] rounded-xl overflow-hidden bg-slate-100 border border-white/90 shadow-xs shrink-0 group relative"
+              title="${escapeAttr(L('Photo'))}"
+            >
+              <img
+                src="${photoUrl}"
+                onerror="this.src='${DEFAULT_IMAGES.placeholder}'"
+                alt="${escapeAttr(itemTitle)}"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-200"
+              />
+            </button>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-start justify-between gap-2 font-bold text-slate-800">
+                <span class="leading-snug">${escapeHtml(itemTitle)}</span>
+                <span class="font-num shrink-0">${formatCurrency(item.lineTotal)}</span>
+              </div>
+              <p class="font-num text-[11px] text-slate-500 mt-0.5">
+                ${item.quantity} ${escapeHtml(formatUnitLabel(item.unitType))} × ${formatCurrency(item.unitPrice)}
+              </p>
+              ${
+                item.isCake
+                  ? `<div class="mt-1.5 text-[11px] theme-text font-semibold flex flex-wrap items-center gap-1.5">
+                      ${ICONS.cake}
+                      <span>${escapeHtml(L('Pounds:'))} <strong class="font-num">${item.cakePounds || item.quantity}</strong></span>
+                      <span>•</span>
+                      <span>${escapeHtml(L('Note:'))} "<strong>${escapeHtml(item.cakeText || '')}</strong>"</span>
+                    </div>`
+                  : ''
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="glass-card p-4 rounded-3xl space-y-3">
+          <div class="flex items-center justify-between gap-2 border-b border-slate-900/[0.06] pb-2.5">
+            <div>
+              <span class="font-num text-xs font-extrabold text-slate-900">#${escapeHtml(order.id)}</span>
+              <span class="font-num text-[11px] text-slate-400 ml-2">${formatDateTime(order.createdAt)}</span>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold theme-soft">
+              ${escapeHtml(formatOrderStatus(order.status))}
+            </span>
+          </div>
+
+          <div class="text-xs text-slate-600 space-y-1">
+            <div><strong class="text-slate-800">${escapeHtml(L('Customer:'))}</strong> ${escapeHtml(order.customerName)} (<span class="font-num">${escapeHtml(order.customerPhone)}</span>)</div>
+            <div><strong class="text-slate-800">${escapeHtml(L('Zone:'))}</strong> ${escapeHtml(L(order.deliveryArea))} • ${escapeHtml(L(order.deliveryAddress))}</div>
+          </div>
+
+          ${
+            viewerRole === 'shopkeeper'
+              ? `<div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  ${escapeHtml(L('Ordered Items & Pictures'))}
+                </div>`
+              : ''
+          }
+
+          <div class="space-y-2">
+            ${itemsHtml}
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-900/[0.06]">
+            <span class="text-slate-500">
+              ${escapeHtml(L('Delivery Fee'))}: <span class="font-num font-semibold">${formatCurrency(order.deliveryCharge)}</span>
+            </span>
+            <span class="text-sm font-bold text-slate-900">
+              ${escapeHtml(L('Total'))}: <span class="font-num font-extrabold theme-text">${formatCurrency(order.totalAmount)}</span>
+            </span>
+          </div>
+
+          ${
+            viewerRole === 'shopkeeper'
+              ? `<div class="pt-2.5 border-t border-slate-900/[0.06] flex flex-wrap items-center justify-between gap-2">
+                  <select
+                    onchange="updateOrderStatus('${order.id}', this.value)"
+                    class="px-3 py-2 rounded-xl glass-input text-xs font-semibold"
+                  >
+                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>${escapeHtml(L('Pending'))}</option>
+                    <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>${escapeHtml(L('Preparing'))}</option>
+                    <option value="out_for_delivery" ${order.status === 'out_for_delivery' ? 'selected' : ''}>${escapeHtml(L('Out for Delivery'))}</option>
+                  </select>
+
+                  <button
+                    type="button"
+                    onclick="completeDeliveryToTrust('${order.id}')"
+                    class="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-2xs flex items-center gap-1.5 transition"
+                  >
+                    ${ICONS.check}
+                    <span>${escapeHtml(L('Complete → Trust'))}</span>
+                  </button>
+                </div>`
+              : ''
+          }
+        </div>
+      `;
+    }
+
+    function renderTrustOrdersList({ title, subtitle, onBack }) {
+      return `
+        <div class="p-4 sm:p-5 animate-view space-y-4">
+          <div class="flex items-center justify-between">
+            <button
+              type="button"
+              onclick="(${onBack.toString()})()"
+              class="text-xs font-bold theme-text flex items-center gap-1"
+            >
+              ${ICONS.arrowLeft}
+              <span>${escapeHtml(L('Menu'))}</span>
+            </button>
+            <span class="font-num px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/25 text-xs font-bold flex items-center gap-1">
+              ${ICONS.shield}
+              <span>${appState.trustOrders.length}</span>
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHtml(title)}</h2>
+            <p class="text-xs text-slate-500">${escapeHtml(subtitle)}</p>
+          </div>
+
+          ${
+            appState.trustOrders.length === 0
+              ? `<div class="text-center py-14 glass-card rounded-3xl px-5">
+                  <div class="w-12 h-12 rounded-2xl bg-white/75 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                    ${ICONS.shield}
+                  </div>
+                  <p class="text-sm font-bold text-slate-700">${escapeHtml(L('No completed orders in Trust'))}</p>
+                  <p class="text-xs text-slate-500 mt-1">${escapeHtml(L('Completed orders automatically move here.'))}</p>
+                </div>`
+              : `<div class="space-y-3">
+                  ${appState.trustOrders.map(order => `
+                    <div class="glass-card p-4 rounded-3xl space-y-2.5">
+                      <div class="flex items-center justify-between">
+                        <span class="font-num text-xs font-extrabold text-slate-900">#${escapeHtml(order.id)}</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/25 text-[11px] font-bold flex items-center gap-1">
+                          ${ICONS.check}
+                          <span>${escapeHtml(L('Delivered'))}</span>
+                        </span>
+                      </div>
+                      <p class="text-xs text-slate-600">
+                        <strong class="text-slate-800">${escapeHtml(L('Customer:'))}</strong> ${escapeHtml(order.customerName)} • ${escapeHtml(L(order.deliveryArea))}
+                      </p>
+                      <div class="text-xs text-slate-700 space-y-1.5 bg-white/70 border border-white/80 p-2.5 rounded-xl">
+                        ${(order.items || []).map(it => {
+                          const pUrl = resolveOrderItemPhoto(it);
+                          return `
+                            <div class="flex items-center justify-between gap-2">
+                              <div class="flex items-center gap-2 min-w-0">
+                                <img src="${pUrl}" onerror="this.src='${DEFAULT_IMAGES.placeholder}'" class="w-9 h-9 rounded-lg object-cover border border-white shrink-0" alt="${escapeAttr(L(it.name))}" />
+                                <span class="truncate">${escapeHtml(L(it.name))} (<span class="font-num">${it.quantity}</span> ${escapeHtml(formatUnitLabel(it.unitType))})${it.cakeText ? ` — "${escapeHtml(it.cakeText)}"` : ''}</span>
+                              </div>
+                              <span class="font-num font-bold shrink-0">${formatCurrency(it.lineTotal)}</span>
+                            </div>
+                          `;
+                        }).join('')}
+                      </div>
+                      <div class="pt-2 border-t border-slate-900/[0.06] flex items-center justify-between text-xs">
+                        <span class="font-num text-slate-400">${formatDateTime(order.completedAt || order.createdAt)}</span>
+                        <span class="font-num font-extrabold text-emerald-700">${escapeHtml(L('Total'))}: ${formatCurrency(order.totalAmount)}</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>`
+          }
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * UTILITIES & BOOT
+     * =========================================================================
+     */
+    function formatDateTime(isoString) {
+      try {
+        return new Date(isoString).toLocaleString(appState.lang === 'bn' ? 'bn-BD' : 'en-US', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch {
+        return '';
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(str) {
+      return escapeHtml(str).replace(/'/g, '&#39;');
+    }
+
+    function updateDeviceClock() {
+      const clockEl = document.getElementById('device-clock');
+      if (!clockEl) return;
+      const now = new Date();
+      clockEl.textContent = now.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: false
+      });
+    }
+
+    updateDeviceClock();
+    setInterval(updateDeviceClock, 30000);
+
+    updateTopSwitcherUI();
+    renderApp();
+    document.getElementById('switch-shopkeeper-btn')?.classList.add('hidden');
+    document.getElementById('switch-customer-btn')?.classList.add('hidden');
+  </script>
+</body>
+</html>
