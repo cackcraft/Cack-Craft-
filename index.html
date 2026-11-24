@@ -356,49 +356,111 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDYe_zWnhO9Fk34QkQar3KTu-DGt7dWYE8",
-      authDomain: "cack-craft-mehedi.firebaseapp.com",
-      projectId: "cack-craft-mehedi",
-      storageBucket: "cack-craft-mehedi.firebasestorage.app",
-      messagingSenderId: "660148427966",
-      appId: "1:660148427966:web:c152f535eaae2bea4ed2ef",
-      measurementId: "G-X84BGC9W0X"
+  const firebaseConfig = {
+    apiKey: "AIzaSyDYe_zWnhO9Fk34QkQar3KTu-DGt7dWYE8",
+    authDomain: "cack-craft-mehedi.firebaseapp.com",
+    projectId: "cack-craft-mehedi",
+    storageBucket: "cack-craft-mehedi.firebasestorage.app",
+    messagingSenderId: "660148427966",
+    appId: "1:660148427966:web:c152f535eaae2bea4ed2ef",
+    measurementId: "G-X84BGC9W0X"
+  };
+
+  window.firebaseReady = false;
+  window.firebaseInitError = null;
+
+  try {
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
+
+    window.firebaseAPI = {
+      createAccount: async ({ email, password, name, role = "customer", profile = {} }) => {
+        const cleanEmail = (email || "").trim();
+        const cleanName = (name || "").trim();
+
+        const credential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
+        const user = credential.user;
+
+        if (cleanName) {
+          await updateProfile(user, { displayName: cleanName });
+        }
+
+        const userDocData = {
+          uid: user.uid,
+          email: user.email || cleanEmail,
+          name: cleanName,
+          role,
+          profile,
+          createdAt: serverTimestamp()
+        };
+
+        await setDoc(doc(db, "users", user.uid), userDocData);
+
+        return {
+          uid: user.uid,
+          email: user.email || cleanEmail,
+          name: cleanName,
+          role,
+          profile
+        };
+      },
+
+      login: async (email, password) => {
+        const cleanEmail = (email || "").trim();
+        const credential = await signInWithEmailAndPassword(auth, cleanEmail, password);
+        const user = credential.user;
+
+        let profileData = {};
+        try {
+          const profileSnap = await getDoc(doc(db, "users", user.uid));
+          if (profileSnap.exists()) {
+            profileData = profileSnap.data() || {};
+          }
+        } catch (profileError) {
+          console.warn("User profile fetch failed:", profileError);
+        }
+
+        return {
+          uid: user.uid,
+          email: user.email || cleanEmail,
+          name: user.displayName || profileData.name || "",
+          role: profileData.role || null,
+          profile: profileData.profile || {}
+        };
+      },
+
+      logout: async () => {
+        await signOut(auth);
+        return true;
+      }
     };
 
-    try {
-      const firebaseApp = initializeApp(firebaseConfig);
-      const auth = getAuth(firebaseApp);
-      const db = getFirestore(firebaseApp);
-      window.firebaseAPI = {
-        createAccount: async ({email, password, name, role, profile}) => {
-          const credential = await createUserWithEmailAndPassword(auth, email, password);
-          await updateProfile(credential.user, { displayName: name });
-          await setDoc(doc(db, "users", credential.user.uid), {
-            uid: credential.user.uid, email, name, role, profile, createdAt: serverTimestamp()
-          });
-          return { uid: credential.user.uid, email, name };
-        },
-        login: async (email, password) => {
-          const credential = await signInWithEmailAndPassword(auth, email, password);
-          const profileSnap = await getDoc(doc(db, "users", credential.user.uid));
-          const profile = profileSnap.exists() ? profileSnap.data() : {};
-          return { uid: credential.user.uid, email: credential.user.email, name: credential.user.displayName || profile.name || "", role: profile.role || null };
-        },
-        logout: () => signOut(auth)
-      };
-      window.firebaseReady = true;
-    } catch (error) {
-      console.error("Firebase initialization failed:", error);
-      window.firebaseReady = false;
-      window.firebaseInitError = error;
-    }
-  </script>
+    window.firebaseReady = true;
+  } catch (error) {
+    console.error("Firebase initialization failed:", error);
+    window.firebaseReady = false;
+    window.firebaseInitError = error;
+  }
+</script>
+  
 
   <script>
     /**
